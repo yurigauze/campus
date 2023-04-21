@@ -4,12 +4,17 @@ import 'package:campus/cursos/tecnicoIntegrado.dart';
 import 'package:campus/infraestrutura/administracao.dart';
 import 'package:campus/infraestrutura/biblioteca.dart';
 import 'package:campus/infraestrutura/laboratorios.dart';
+import 'package:campus/professor/dispararAvisos.dart';
+import 'package:campus/professor/disparos/dispararAlunos.dart';
+import 'package:campus/professor/disparos/dispararTurma.dart';
+import 'package:campus/professor/disparos/dispararTurnos.dart';
+import 'package:campus/professor/disparos/disparosTodos.dart';
 import 'package:flutter/material.dart';
 
 import 'cursos/posGraduacao.dart';
 import 'cursos/tecnicoSubsequente.dart';
 import 'homeAluno.dart';
-import 'homeProfessor.dart';
+import 'professor/homeProfessor.dart';
 import 'introducao.dart';
 
 
@@ -37,8 +42,16 @@ class App extends StatelessWidget {
         'laboratorio':(context) => laboratorios(),
         'biblioteca':(context) => Biblioteca(),
         'Administracao':(context) => Administracao(),
+        'dispararprofessor':(context) => DispararAvisos(),
+        'disparoTodosProfessor':(context) => DispararTodosProfessor(),
+        'disparoAlunosProfessor': (context) => DispararAlunosProfessor(),
+        'disparoTurmaProfessor': (context) => DispararTurmaProfessor(),
+        'disparoTurnoProfessor': (context) => DispararTurnosProfessor(),
         
       },
     );
   }
+}
+
+class DispararTurnoProfessor {
 }

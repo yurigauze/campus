@@ -1,4 +1,5 @@
 import 'package:campus/introducao.dart';
+import 'package:campus/professor/tumas.dart';
 import 'package:flutter/material.dart';
 import 'package:campus/app.dart';
 
@@ -23,14 +24,18 @@ class HomeProfessor extends StatelessWidget {
                 leading: Icon(Icons.message_outlined),
                 title: const Text('Disparar Avisos'),
                 onTap: () {
-                  Navigator.popAndPushNamed(context, 'avisos');
+                  Navigator.popAndPushNamed(context, 'dispararprofessor');
                 },
               ),
               ListTile(
                 leading: Icon(Icons.school_outlined),
                 title: const Text('Turmas'),
                 onTap: () {
-                  Navigator.popAndPushNamed(context, 'avisos');
+                 Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => TurmasProfessor()),
+                  );
                 },
               ),
               

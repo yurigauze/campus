@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:campus/app.dart';
+import 'package:flutter/services.dart';
 
 class Introducao extends StatelessWidget {
 
-  final _cpfController = TextEditingController();
-  final _passwordController = TextEditingController();
+ TextEditingController  _cpfController = TextEditingController();
+ TextEditingController _passwordController = TextEditingController();
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,17 +29,18 @@ class Introducao extends StatelessWidget {
                      Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: TextField(
-              controller: _cpfController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: 'CPF',
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                controller: _cpfController, // Atribuindo o controller criado à propriedade controller
+                decoration: InputDecoration(
+                  labelText: 'CPF', 
               ),
             ),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: TextField(
-              controller: _passwordController,
+              controller:  _passwordController,
               obscureText: true,
               decoration: InputDecoration(
                 labelText: 'Senha',
@@ -50,20 +52,37 @@ class Introducao extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: ElevatedButton(
               onPressed: () {
+
+                var usuario = _cpfController.text;
+                var senha = _passwordController.text;
+                if (usuario== "111" && senha == "professor") {
+                  Navigator.pushNamed(context, 'homeProfessor');
+                } else if (usuario == "111" && senha == "aluno") {
                 Navigator.pushNamed(context, 'homeAluno');
-              },
-              child: Text('Login como Aluno'),
+                } else {
+                showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Credenciais invalidas"),
+                            content: Text("Usuario ou senha informados estão incorretos. $usuario, $senha  ", ),
+                            actions: <Widget>[
+                              TextButton(
+                                child: Text("OK"),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                }
+              }, child: const Text("Login"),
+            
             ),
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, 'homeProfessor');
-              },
-              child: Text('Login como Servidor'),
-            ),
-          ),
+          
         ],
       ),
 
