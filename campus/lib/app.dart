@@ -4,6 +4,7 @@ import 'package:campus/cursos/tecnicoIntegrado.dart';
 import 'package:campus/infraestrutura/administracao.dart';
 import 'package:campus/infraestrutura/biblioteca.dart';
 import 'package:campus/infraestrutura/laboratorios.dart';
+import 'package:campus/professor/avisosProfessor.dart';
 import 'package:campus/professor/dispararAvisos.dart';
 import 'package:campus/professor/disparos/dispararAlunos.dart';
 import 'package:campus/professor/disparos/dispararTurma.dart';
@@ -16,7 +17,6 @@ import 'cursos/tecnicoSubsequente.dart';
 import 'homeAluno.dart';
 import 'professor/homeProfessor.dart';
 import 'introducao.dart';
-
 
 class App extends StatelessWidget {
   App({super.key});
@@ -32,26 +32,25 @@ class App extends StatelessWidget {
       ),
       routes: {
         '/': (context) => Introducao(),
-        'homeAluno':( context) => HomeAluno(),
-        'homeProfessor':( context) => HomeProfessor(),
-        'avisos':(context) => Avisos(),
-        'cursoSuperior':(context) => CursoSuperior(),
+        'homeAluno': (context) => HomeAluno(),
+        'homeProfessor': (context) => HomeProfessor(),
+        'avisos': (context) => Avisos(),
+        'cursoSuperior': (context) => CursoSuperior(),
         'posGraduacao': (context) => PosGraduacao(),
-        'tecnicoIntegrado':(context)=>TecnicoIntegrado(),
-        'tecnicoSubsequente':(context)=> TecnicoSubsequente(),
-        'laboratorio':(context) => laboratorios(),
-        'biblioteca':(context) => Biblioteca(),
-        'Administracao':(context) => Administracao(),
-        'dispararprofessor':(context) => DispararAvisos(),
-        'disparoTodosProfessor':(context) => DispararTodosProfessor(),
+        'tecnicoIntegrado': (context) => TecnicoIntegrado(),
+        'tecnicoSubsequente': (context) => TecnicoSubsequente(),
+        'laboratorio': (context) => laboratorios(),
+        'biblioteca': (context) => Biblioteca(),
+        'Administracao': (context) => Administracao(),
+        'dispararprofessor': (context) => DispararAvisos(),
+        'disparoTodosProfessor': (context) => DispararTodosProfessor(),
         'disparoAlunosProfessor': (context) => DispararAlunosProfessor(),
         'disparoTurmaProfessor': (context) => DispararTurmaProfessor(),
         'disparoTurnoProfessor': (context) => DispararTurnosProfessor(),
-        
+        'avisosProfessor': (context) => AvisosProfessor(),
       },
     );
   }
 }
 
-class DispararTurnoProfessor {
-}
+class DispararTurnoProfessor {}

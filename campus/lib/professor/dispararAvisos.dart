@@ -17,8 +17,6 @@ class DispararAvisos extends StatelessWidget {
     );
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +32,7 @@ class DispararAvisos extends StatelessWidget {
                 Card(
                   child: InkWell(
                     onTap: () {
-                        Navigator.push(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => DispararTodosProfessor()),
@@ -140,7 +138,7 @@ class DispararAvisos extends StatelessWidget {
                   child: InkWell(
                     onTap: () {
                       // ação a ser executada ao clicar no Card
-                     Navigator.push(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => DispararTurnosProfessor()),
