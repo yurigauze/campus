@@ -21,7 +21,8 @@ class Introducao extends StatelessWidget {
               margin: EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: [
-                  Image.network('https://certificados.paranavai.ifpr.edu.br/resources/img/paranavai-vertical.png'), // Adicione a imagem como filho do Column
+                  Image.network('https://certificados.paranavai.ifpr.edu.br/resources/img/paranavai-vertical.png', width: 500), // Adicione a imagem como filho do Column
+                  
                 ],
               ),
             ),

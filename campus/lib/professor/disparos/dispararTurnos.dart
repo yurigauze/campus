@@ -1,3 +1,6 @@
+import 'package:campus/dao/aviso_dao.dart';
+import 'package:campus/database/daofake/aviso_dao_fake.dart';
+import 'package:campus/interface/aviso_dao.dart';
 import 'package:flutter/material.dart';
 
 class DispararTurnosProfessor extends StatelessWidget {
@@ -97,6 +100,9 @@ class _DispararTurmaProfessorState extends State<DispararTurnoProf> {
           onPressed: () {
             var titulo = _Titulo.text;
             var texto = _Texto.text;
+            var aviso = preencherDTO();
+            AvisoDao dao = AvisoDAOFake();
+            dao.salvar(aviso);
             showDialog(
               context: context,
               builder: (context) => AlertDialog(
@@ -125,5 +131,12 @@ class _DispararTurmaProfessorState extends State<DispararTurnoProf> {
         ),
       ],
     );
+  }
+   Aviso preencherDTO() {
+    return Aviso(
+        id: id,
+        titulo: _Titulo.text,
+        corpo: _Texto.text,
+
   }
 }

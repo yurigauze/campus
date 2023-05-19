@@ -1,39 +1,19 @@
 import 'package:flutter/material.dart';
 
 class AvisosProfessor extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Disparar para Turma',
-      home: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-          title: Text('Disparar para Turma'),
-        ),
-        body: AvisosProf(),
-      ),
-    );
-  }
-}
+  f
 
-class AvisosProf extends StatefulWidget {
-  @override
-  _AvisosProfessorState createState() => _AvisosProfessorState();
-}
-
-class _AvisosProfessorState extends State<AvisosProf> {
-  final List<Aviso> avisos = [
-    Aviso(titulo: 'Aviso 1', corpo: 'Texto aviso 1'),
-    Aviso(titulo: 'Aviso 2', corpo: 'Texto aviso 2'),
-    Aviso(titulo: 'Aviso 3', corpo: 'Texto aviso 3'),
-  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Text('Disparar para Turma'),
+      ),
       body: ListView.builder(
         itemCount: avisos.length,
         itemBuilder: (BuildContext context, int index) {
@@ -82,16 +62,11 @@ class DetalhesAvisoScreen extends StatelessWidget {
               aviso.corpo,
               style: TextStyle(fontSize: 16),
             ),
+
+            
           ],
         ),
       ),
     );
   }
-}
-
-class Aviso {
-  final String titulo;
-  final String corpo;
-
-  Aviso({required this.titulo, required this.corpo});
 }

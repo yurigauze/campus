@@ -1,10 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:campus/professor/avisosProfessor2.dart';
+import 'package:campus/interface/aviso.dart';
+import 'package:campus/database/daofake/aviso_dao_fake.dart';
+import 'package:campus/interface/aviso.dart';
+import 'package:campus/interface/aviso_dao.dart';
+import 'package:flutter/material.dart';
 
-TextEditingController _Titulo = TextEditingController();
-TextEditingController _Texto = TextEditingController();
+
+
 
 class DispararTodosProfessor extends StatelessWidget {
+
+  DispararTodosProfessor({Key? key}) : super(key: key);
+  final formKey = GlobalKey<FormState>();
+  dynamic id;
+
+  TextEditingController _Titulo = TextEditingController();
+  TextEditingController _Texto = TextEditingController();
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,13 +59,14 @@ class DispararTodosProfessor extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  var titulo = _Titulo.text;
-                  var texto = _Texto.text;
+                  var titulos = _Titulo.text;
+                  var textos = _Texto.text;
+
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                      title: Text("$titulo"),
-                      content: Text("$texto"),
+                      title: Text("$titulos"),
+                      content: Text("$textos"),
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.pop(context),
@@ -77,5 +93,23 @@ class DispararTodosProfessor extends StatelessWidget {
         ),
       ),
     );
+  
+  }
+  Aviso preencherDTO(){
+    return Aviso(
+      id: id,
+      titulo: _Titulo.text,
+      corpo: _Texto.text,
+    );
+  }
+
+  void preencherCampos(Aviso aviso){
+    _Titulo.text = aviso.titulo;
+    _Texto.text = aviso.corpo;
+
   }
 }
+  
+
+
+

@@ -1,0 +1,79 @@
+
+import 'package:campus/database/daofake/aviso_dao_fake.dart';
+import 'package:campus/interface/aviso.dart';
+import 'package:campus/interface/aviso_dao.dart';
+import 'package:flutter/material.dart';
+
+class AvisoLista extends StatelessWidget {
+  AvisoLista({Key? key}) : super(key: key);
+  AvisoDao dao = AvisoDAOFake();
+
+  @override
+  Widget build(BuildContext context) {
+     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Text('Disparar para Turma'),),
+        body: criarLista(context));
+
+  }
+
+  Widget criarLista(BuildContext context) {
+    return FutureBuilder(
+      future: dao.consultarTodos(),
+      builder: (context, AsyncSnapshot<List<Aviso>> lista) {
+        if (!lista.hasData) return const CircularProgressIndicator();
+        if (lista.data == null) return const Text('Não há avisos...');
+        List<Aviso> listaAvisos = lista.data!;
+        return ListView.builder(
+          itemCount: listaAvisos.length,
+          itemBuilder: (context, indice) {
+            var aviso = listaAvisos[indice];
+            return criarItemLista(context, aviso);
+          },
+        );
+      },
+    );
+  }
+
+  Widget criarItemLista(BuildContext context, Aviso aviso) {
+    return ItemLista(
+        aviso: aviso,
+        alterar: () {
+         
+        },
+        detalhes: () {
+          
+        },
+        excluir: () {
+          dao.excluir(aviso.id);
+        });
+  }
+}
+
+class ItemLista extends StatelessWidget {
+  final Aviso aviso;
+  final VoidCallback alterar;
+  final VoidCallback detalhes;
+  final VoidCallback excluir;
+
+  const ItemLista(
+      {required this.aviso,
+      required this.alterar,
+      required this.detalhes,
+      required this.excluir,
+      Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(aviso.titulo),
+      subtitle: Text(aviso.corpo),
+      onTap: detalhes,
+    );
+  }
+}
