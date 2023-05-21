@@ -1,8 +1,4 @@
-
-
-
-
-import 'package:campus/interface/aviso.dart';
+import 'package:campus/controles/dto/aviso.dart';
 
 abstract class AvisoDao {
   Aviso salvar(Aviso avisos);

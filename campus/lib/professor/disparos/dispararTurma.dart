@@ -1,3 +1,6 @@
+import 'package:campus/controles/daofake/aviso_dao_fake.dart';
+import 'package:campus/controles/dto/aviso.dart';
+import 'package:campus/controles/interface/aviso_dao.dart';
 import 'package:flutter/material.dart';
 
 class DispararTurmaProfessor extends StatelessWidget {
@@ -24,11 +27,19 @@ class DispararTurmaProf extends StatefulWidget {
   _DispararTurmaProfessorState createState() => _DispararTurmaProfessorState();
 }
 
-TextEditingController _Titulo = TextEditingController();
-TextEditingController _Texto = TextEditingController();
-
 class _DispararTurmaProfessorState extends State<DispararTurmaProf> {
+  TextEditingController _Titulo = TextEditingController();
+  TextEditingController _Texto = TextEditingController();
+
+  @override
+  void dispose() {
+    _Titulo.dispose();
+    _Texto.dispose();
+    super.dispose();
+  }
+
   String? _selectedItem;
+  dynamic id;
 
   @override
   Widget build(BuildContext context) {
@@ -97,19 +108,40 @@ class _DispararTurmaProfessorState extends State<DispararTurmaProf> {
           onPressed: () {
             var titulo = _Titulo.text;
             var texto = _Texto.text;
-            showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: Text("Enviar para a turma $_selectedItem"),
-                content: Text("Titulo: $titulo \nTexto: $texto"),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text("Fechar"),
-                  ),
-                ],
-              ),
-            );
+
+            if (_selectedItem == null || _selectedItem?.isEmpty == true) {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: Text("Erro"),
+                  content: Text("Selecione uma Turma"),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text("OK"),
+                    ),
+                  ],
+                ),
+              );
+            } else {
+              var aviso = preencherDTO();
+              AvisoDao dao = AvisoDAOFake();
+              dao.salvar(aviso);
+
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: Text("Enviar para o(a) Aluno(a) $_selectedItem"),
+                  content: Text("Titulo: $titulo \nTexto: $texto"),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text("Fechar"),
+                    ),
+                  ],
+                ),
+              );
+            }
           },
           child: Container(
             height: 40,
@@ -125,5 +157,20 @@ class _DispararTurmaProfessorState extends State<DispararTurmaProf> {
         ),
       ],
     );
+  }
+
+  Aviso preencherDTO() {
+    return Aviso(
+      id: id,
+      titulo: _Titulo.text,
+      corpo: _Texto.text,
+      adicional: _selectedItem ?? "",
+    );
+  }
+
+  void preencherCampos(Aviso aviso) {
+    _Titulo.text = aviso.titulo;
+    _Texto.text = aviso.corpo;
+    _selectedItem = aviso.adicional;
   }
 }

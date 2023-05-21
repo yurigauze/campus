@@ -4,7 +4,6 @@ import 'package:campus/cursos/tecnicoIntegrado.dart';
 import 'package:campus/infraestrutura/administracao.dart';
 import 'package:campus/infraestrutura/biblioteca.dart';
 import 'package:campus/infraestrutura/laboratorios.dart';
-import 'package:campus/professor/avisosProfessor.dart';
 import 'package:campus/professor/avisosProfessor2.dart';
 import 'package:campus/professor/disparos/dispararAlunos.dart';
 import 'package:campus/professor/disparos/dispararTurma.dart';
@@ -42,7 +41,7 @@ class App extends StatelessWidget {
         'laboratorio': (context) => laboratorios(),
         'biblioteca': (context) => Biblioteca(),
         'Administracao': (context) => Administracao(),
-        'avisosProfessor2':(context) => AvisoLista(),
+        'avisosProfessor2': (context) => AvisoLista(),
         'disparoTodosProfessor': (context) => DispararTodosProfessor(),
         'disparoAlunosProfessor': (context) => DispararAlunosProfessor(),
         'disparoTurmaProfessor': (context) => DispararTurmaProfessor(),

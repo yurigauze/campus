@@ -1,8 +1,6 @@
-
-
-import 'package:campus/interface/aviso.dart';
-import 'package:campus/database/daofake/aviso_fake.dart';
-import 'package:campus/interface/aviso_dao.dart';
+import 'package:campus/controles/dto/aviso.dart';
+import 'package:campus/controles/daofake/aviso_fake.dart';
+import 'package:campus/controles/interface/aviso_dao.dart';
 
 class AvisoDAOFake implements AvisoDao {
   @override
@@ -29,6 +27,7 @@ class AvisoDAOFake implements AvisoDao {
         id: avisos.length,
         titulo: aviso.titulo,
         corpo: aviso.corpo,
+        adicional: aviso.adicional,
       );
       avisos.add(aviso);
     } else {

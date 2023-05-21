@@ -1,7 +1,7 @@
-
-import 'package:campus/database/daofake/aviso_dao_fake.dart';
-import 'package:campus/interface/aviso.dart';
-import 'package:campus/interface/aviso_dao.dart';
+import 'package:campus/controles/daofake/aviso_dao_fake.dart';
+import 'package:campus/controles/dto/aviso.dart';
+import 'package:campus/controles/interface/aviso_dao.dart';
+import 'package:campus/professor/detalhesAvisos.dart';
 import 'package:flutter/material.dart';
 
 class AvisoLista extends StatelessWidget {
@@ -10,15 +10,15 @@ class AvisoLista extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(),
+    return Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          title: Text('Disparar para Turma'),
         ),
-        title: Text('Disparar para Turma'),),
         body: criarLista(context));
-
   }
 
   Widget criarLista(BuildContext context) {
@@ -42,12 +42,8 @@ class AvisoLista extends StatelessWidget {
   Widget criarItemLista(BuildContext context, Aviso aviso) {
     return ItemLista(
         aviso: aviso,
-        alterar: () {
-         
-        },
-        detalhes: () {
-          
-        },
+        alterar: () {},
+        detalhes: () {},
         excluir: () {
           dao.excluir(aviso.id);
         });
@@ -72,8 +68,24 @@ class ItemLista extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(aviso.titulo),
-      subtitle: Text(aviso.corpo),
-      onTap: detalhes,
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+            visible: aviso.adicional != null,
+            child: Text(aviso.adicional ?? ''),
+          ),
+          Text(aviso.corpo),
+        ],
+      ),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetalhesAvisoScreen(aviso: aviso),
+          ),
+        );
+      },
     );
   }
 }

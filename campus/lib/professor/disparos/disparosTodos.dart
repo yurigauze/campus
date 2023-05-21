@@ -1,17 +1,9 @@
+import 'package:campus/controles/daofake/aviso_dao_fake.dart';
+import 'package:campus/controles/interface/aviso_dao.dart';
 import 'package:flutter/material.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:campus/professor/avisosProfessor2.dart';
-import 'package:campus/interface/aviso.dart';
-import 'package:campus/database/daofake/aviso_dao_fake.dart';
-import 'package:campus/interface/aviso.dart';
-import 'package:campus/interface/aviso_dao.dart';
-import 'package:flutter/material.dart';
-
-
-
+import 'package:campus/controles/dto/aviso.dart';
 
 class DispararTodosProfessor extends StatelessWidget {
-
   DispararTodosProfessor({Key? key}) : super(key: key);
   final formKey = GlobalKey<FormState>();
   dynamic id;
@@ -19,6 +11,11 @@ class DispararTodosProfessor extends StatelessWidget {
   TextEditingController _Titulo = TextEditingController();
   TextEditingController _Texto = TextEditingController();
 
+  @override
+  void dispose() {
+    _Titulo.dispose();
+    _Texto.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +58,9 @@ class DispararTodosProfessor extends StatelessWidget {
                 onPressed: () {
                   var titulos = _Titulo.text;
                   var textos = _Texto.text;
-
+                  var aviso = preencherDTO();
+                  AvisoDao dao = AvisoDAOFake();
+                  dao.salvar(aviso);
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
@@ -93,9 +92,9 @@ class DispararTodosProfessor extends StatelessWidget {
         ),
       ),
     );
-  
   }
-  Aviso preencherDTO(){
+
+  Aviso preencherDTO() {
     return Aviso(
       id: id,
       titulo: _Titulo.text,
@@ -103,13 +102,8 @@ class DispararTodosProfessor extends StatelessWidget {
     );
   }
 
-  void preencherCampos(Aviso aviso){
+  void preencherCampos(Aviso aviso) {
     _Titulo.text = aviso.titulo;
     _Texto.text = aviso.corpo;
-
   }
 }
-  
-
-
-
