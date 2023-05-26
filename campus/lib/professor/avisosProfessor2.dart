@@ -21,6 +21,7 @@ class AvisoLista extends StatelessWidget {
         body: criarLista(context));
   }
 
+@override
   Widget criarLista(BuildContext context) {
     return FutureBuilder(
       future: dao.consultarTodos(),

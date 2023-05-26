@@ -1,6 +1,6 @@
 import 'package:campus/controles/dto/aviso.dart';
 import 'package:campus/controles/daofake/aviso_fake.dart';
-import 'package:campus/controles/interface/aviso_dao.dart';
+import 'package:campus/controles/interface/aviso_dao_interface.dart';
 
 class AvisoDAOFake implements AvisoDao {
   @override
