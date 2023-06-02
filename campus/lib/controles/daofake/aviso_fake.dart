@@ -13,8 +13,4 @@ List<Aviso> avisos = [
     titulo: "Titulo 3",
     corpo: "Corpo 3",
   ),
-  Aviso(
-    titulo: "Titulo 4",
-    corpo: "Corpo 4",
-  ),
 ];

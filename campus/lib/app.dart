@@ -9,6 +9,8 @@ import 'package:campus/professor/disparos/dispararAlunos.dart';
 import 'package:campus/professor/disparos/dispararTurma.dart';
 import 'package:campus/professor/disparos/dispararTurnos.dart';
 import 'package:campus/professor/disparos/disparosTodos.dart';
+import 'package:campus/professor/turma/telaTurma.dart';
+import 'package:campus/rota.dart';
 import 'package:flutter/material.dart';
 
 import 'cursos/posGraduacao.dart';
@@ -46,6 +48,7 @@ class App extends StatelessWidget {
         'disparoAlunosProfessor': (context) => DispararAlunosProfessor(),
         'disparoTurmaProfessor': (context) => DispararTurmaProfessor(),
         'disparoTurnoProfessor': (context) => DispararTurnosProfessor(),
+          Rota.turmaForm: (context) => TurmaForm(),
       },
     );
   }

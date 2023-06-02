@@ -9,7 +9,8 @@ class Conexao {
 
 static Future<Database> criar() async { //como estamos utilizando o await dentro da função, precisamos tornar a função assíncrona, colocando async
     if(_fechado){
-      String path = join(await getDatabasesPath(), 'banco.db'); // precisamos "esperar" (await) o resultado para seguir a execução
+      String path = join(await getDatabasesPath(), 'banco.db');
+      deleteDatabase(path); // precisamos "esperar" (await) o resultado para seguir a execução
       _database = await openDatabase(
         //chamando o método que que abre o database
         path, // informando o caminho
@@ -17,7 +18,10 @@ static Future<Database> criar() async { //como estamos utilizando o await dentro
         onCreate: (db, v) {
           // criando os elementos (tabelas e registros) do BD
           db.execute(criarAviso);
+          db.execute(criarTurma);
           insercoesAvisos.forEach(db.execute);
+          insercoesTurma.forEach(db.execute);
+
         },
       );
       _fechado = false;

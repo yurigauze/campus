@@ -1,5 +1,5 @@
-import 'package:campus/controles/daofake/aviso_dao_fake.dart';
 import 'package:campus/controles/interface/aviso_dao_interface.dart';
+import 'package:campus/controles/sqlite/dao/aviso_dao_sqlite.dart';
 import 'package:flutter/material.dart';
 import 'package:campus/controles/dto/aviso.dart';
 
@@ -58,22 +58,39 @@ class DispararTodosProfessor extends StatelessWidget {
                 onPressed: () {
                   var titulos = _Titulo.text;
                   var textos = _Texto.text;
-                  var aviso = preencherDTO();
-                  AvisoDao dao = AvisoDAOFake();
-                  dao.salvar(aviso);
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: Text("$titulos"),
-                      content: Text("$textos"),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: Text("Fechar"),
-                        ),
-                      ],
-                    ),
-                  );
+
+                  if (titulos == "" && textos == "") {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text("Erro"),
+                        content: Text("Insira um Titulo e uma mensagem"),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: Text("OK"),
+                          ),
+                        ],
+                      ),
+                    );
+                  } else {
+                    var aviso = preencherDTO();
+                    AvisoDao dao = ContatoDAOSQLite();
+                    dao.salvar(aviso);
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text("$titulos"),
+                        content: Text("$textos"),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: Text("Fechar"),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
                 },
                 child: Container(
                   height: 40,

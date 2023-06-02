@@ -12,8 +12,8 @@ class HomeProfessor extends StatelessWidget {
     return Card(
       child: Container(
         alignment: Alignment.center,
-        width: 190,
-        height: 190,
+        width: 170,
+        height: 170,
         color: Colors.red,
       ),
     );
@@ -42,8 +42,8 @@ class HomeProfessor extends StatelessWidget {
                       );
                     },
                     child: Container(
-                      width: 200,
-                      height: 200,
+                      width: 170,
+                      height: 170,
                       color: Color.fromARGB(255, 235, 83, 96),
                       child: Center(
                         child: Column(
@@ -75,8 +75,8 @@ class HomeProfessor extends StatelessWidget {
                       );
                     },
                     child: Container(
-                      width: 200,
-                      height: 200,
+                      width: 170,
+                      height: 170,
                       color: Color.fromARGB(255, 112, 204, 89),
                       child: Center(
                         child: Column(
@@ -114,8 +114,8 @@ class HomeProfessor extends StatelessWidget {
                       );
                     },
                     child: Container(
-                      width: 200,
-                      height: 200,
+                      width: 170,
+                      height: 170,
                       color: Colors.blue,
                       child: Center(
                         child: Column(
@@ -148,8 +148,8 @@ class HomeProfessor extends StatelessWidget {
                       );
                     },
                     child: Container(
-                      width: 200,
-                      height: 200,
+                      width: 170,
+                      height: 170,
                       color: Color.fromARGB(255, 192, 102, 228),
                       child: Center(
                         child: Column(
@@ -200,7 +200,7 @@ class HomeProfessor extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => TurmasProfessor()),
+                  MaterialPageRoute(builder: (context) => TurmaLista()),
                 );
               },
             ),
@@ -249,7 +249,7 @@ Widget buildDrawer(BuildContext context) {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => TurmasProfessor()),
+                MaterialPageRoute(builder: (context) => TurmaLista()),
               );
             },
           ),

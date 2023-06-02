@@ -43,8 +43,30 @@ class ContatoDAOSQLite implements AvisoDao{
   }
   
   @override
-  Aviso salvar(Aviso avisos) {
-    // TODO: implement salvar
-    throw UnimplementedError();
-  }
+  Future<Aviso> salvar(Aviso avisos) async {
+    Database db = await Conexao.criar();
+    String sql;
+      if (avisos.id == null){
+        sql = 
+        "INSERT INTO aviso (titulo, corpo, adicional) VALUES (?,?,?)";
+        int id = await db.rawInsert(sql, [avisos.titulo, avisos.corpo, avisos.adicional]);
+        avisos = Aviso(
+          id: id,
+          titulo: avisos.titulo, 
+          corpo: avisos.corpo, 
+          adicional: avisos.adicional);
+      } else {
+         sql =
+          'UPDATE aviso SET titulo = ?, corpo =?, adicional = ? WHERE id = ?';
+      db.rawUpdate(sql, [
+
+        avisos.titulo,
+        avisos.corpo,
+        avisos.adicional,
+        avisos.id
+      ]);
+    }
+    return avisos;
+      }
+
 }

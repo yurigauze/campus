@@ -1,6 +1,7 @@
-import 'package:campus/controles/daofake/aviso_dao_fake.dart';
+
 import 'package:campus/controles/dto/aviso.dart';
 import 'package:campus/controles/interface/aviso_dao_interface.dart';
+import 'package:campus/controles/sqlite/dao/aviso_dao_sqlite.dart';
 import 'package:flutter/material.dart';
 
 class DispararTurmaProfessor extends StatelessWidget {
@@ -125,7 +126,7 @@ class _DispararTurmaProfessorState extends State<DispararTurmaProf> {
               );
             } else {
               var aviso = preencherDTO();
-              AvisoDao dao = AvisoDAOFake();
+              AvisoDao dao = ContatoDAOSQLite();
               dao.salvar(aviso);
 
               showDialog(

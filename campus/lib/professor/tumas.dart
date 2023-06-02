@@ -1,87 +1,132 @@
+import 'package:campus/controles/dto/turma.dart';
+import 'package:campus/controles/interface/turma_dao_interface.dart';
+import 'package:campus/controles/sqlite/dao/turma_dao_sqlite.dart';
+import 'package:campus/professor/detalhesTurma.dart';
+import 'package:campus/professor/turma/telaTurma.dart';
+import 'package:campus/rota.dart';
+import 'package:campus/widgets/botaoAdicionar.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+
 import 'package:flutter/material.dart';
 
-class Turma {
-  final String nome;
+class TurmaLista extends StatefulWidget {
+  TurmaLista({Key? key}) : super(key: key);
 
-  Turma({required this.nome});
-}
-
-class TurmasProfessor extends StatefulWidget {
   @override
-  _ListaAvisosState createState() => _ListaAvisosState();
+  State<TurmaLista> createState() => _TurmaListaState();
 }
 
-class _ListaAvisosState extends State<TurmasProfessor> {
-  List<Turma> _avisos = [
-    Turma(nome: '1º ENG Software'),
-    Turma(nome: '2º ENG Software'),
-  ];
+class _TurmaListaState extends State<TurmaLista> {
+  dynamic id;
 
-  void _addAviso(Turma aviso) {
-    setState(() {
-      _avisos.add(aviso);
-    });
-  }
+  String nome = '';
+
+  String turno = '';
+
+  TurmaDao dao = TurmaDAOSQlite();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         title: Text('Turmas'),
       ),
-      body: ListView.builder(
-        itemCount: _avisos.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(_avisos[index].nome),
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final result = await showDialog(
-            context: context,
-            builder: (context) {
-              String nome = '';
-              return AlertDialog(
-                title: Text('Adicionar Turma'),
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextField(
-                      decoration: InputDecoration(
-                        labelText: 'Turma',
-                      ),
-                      onChanged: (value) {
-                        nome = value;
-                      },
-                    ),
-                  ],
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text('Cancelar'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(Turma(nome: nome));
-                    },
-                    child: Text('Salvar'),
-                  ),
-                ],
-              );
-            },
-          );
+      body: criarLista(context),
+      floatingActionButton: BotaoAdicionar(
+          acao: () => Navigator.pushNamed(context, Rota.turmaForm).then((value) => buscarTurma())),
+    );
 
-          if (result != null) {
-            _addAviso(result);
-          }
-        },
-        child: Icon(Icons.add),
+  }
+
+  
+  Future<List<Turma>> buscarTurma() {
+    setState(() {});
+    return dao.consultarTodos();
+  }
+
+  @override
+  Widget criarLista(BuildContext context) {
+    return FutureBuilder(
+      future: dao.consultarTodos(),
+      builder: (context, AsyncSnapshot<List<Turma>> lista) {
+        if (!lista.hasData) return const CircularProgressIndicator();
+        if (lista.data == null) return const Text('Não há Turmas...');
+        List<Turma> listaTurmas = lista.data!;
+        return ListView.builder(
+          itemCount: listaTurmas.length,
+          itemBuilder: (context, indice) {
+            var turma = listaTurmas[indice];
+            return criarItemLista(context, turma);
+          },
+        );
+      },
+    );
+  }
+
+    Widget criarItemLista(BuildContext context, Turma turma) {
+    return ItemLista(
+        turma: turma,
+        alterar: () {},
+        detalhes: () {},
+        excluir: () {
+          dao.excluir(turma.id);
+        });
+  }
+
+  Turma preencherDTO() {
+    return Turma(
+      id: id,
+      nome: nome,
+      turno: turno,
+    );
+  }
+
+  void preencherCampos(Turma turma) {
+    nome = turma.nome;
+    turno = turma.turno;
+  }
+}
+
+
+
+class ItemLista extends StatelessWidget {
+  final Turma turma;
+  final VoidCallback alterar;
+  final VoidCallback detalhes;
+  final VoidCallback excluir;
+
+  const ItemLista(
+      {required this.turma,
+      required this.alterar,
+      required this.detalhes,
+      required this.excluir,
+      Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(turma.nome),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(turma.turno),
+        ],
       ),
+        onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => TurmaForm()
+          ),
+        );
+      },
+
     );
   }
 }
+

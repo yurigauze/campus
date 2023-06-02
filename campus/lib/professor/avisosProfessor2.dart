@@ -1,12 +1,12 @@
-import 'package:campus/controles/daofake/aviso_dao_fake.dart';
 import 'package:campus/controles/dto/aviso.dart';
-import 'package:campus/controles/interface/aviso_dao.dart';
+import 'package:campus/controles/interface/aviso_dao_interface.dart';
+import 'package:campus/controles/sqlite/dao/aviso_dao_sqlite.dart';
 import 'package:campus/professor/detalhesAvisos.dart';
 import 'package:flutter/material.dart';
 
 class AvisoLista extends StatelessWidget {
   AvisoLista({Key? key}) : super(key: key);
-  AvisoDao dao = AvisoDAOFake();
+  AvisoDao dao = ContatoDAOSQLite();
 
   @override
   Widget build(BuildContext context) {
