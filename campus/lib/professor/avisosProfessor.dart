@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class AvisoLista extends StatelessWidget {
   AvisoLista({Key? key}) : super(key: key);
-  AvisoDao dao = ContatoDAOSQLite();
+  AvisoDao dao = AvisoDAOSQLite();
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class AvisoLista extends StatelessWidget {
         body: criarLista(context));
   }
 
-@override
+  @override
   Widget criarLista(BuildContext context) {
     return FutureBuilder(
       future: dao.consultarTodos(),

@@ -1,6 +1,7 @@
 import 'package:campus/introducao.dart';
 import 'package:campus/professor/disparos/disparosTodos.dart';
-import 'package:campus/professor/tumas.dart';
+import 'package:campus/professor/turma2.dart';
+import 'package:campus/professor/turnosProfessor.dart';
 import 'package:flutter/material.dart';
 
 import 'disparos/dispararAlunos.dart';
@@ -108,7 +109,7 @@ class HomeProfessor extends StatelessWidget {
                     onTap: () {
                       // ação a ser executada ao clicar no Card
                       Navigator.push(
-                        context,  
+                        context,
                         MaterialPageRoute(
                             builder: (context) => DispararAlunosProfessor()),
                       );
@@ -201,6 +202,16 @@ class HomeProfessor extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => TurmaLista()),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.school_outlined, color: Colors.black),
+              title: const Text('Turnos'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => TurnoLista()),
                 );
               },
             ),

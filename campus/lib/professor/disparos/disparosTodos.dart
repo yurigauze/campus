@@ -75,7 +75,7 @@ class DispararTodosProfessor extends StatelessWidget {
                     );
                   } else {
                     var aviso = preencherDTO();
-                    AvisoDao dao = ContatoDAOSQLite();
+                    AvisoDao dao = AvisoDAOSQLite();
                     dao.salvar(aviso);
                     showDialog(
                       context: context,

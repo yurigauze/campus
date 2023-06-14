@@ -1,4 +1,3 @@
-
 import 'package:campus/controles/dto/aviso.dart';
 import 'package:campus/controles/interface/aviso_dao_interface.dart';
 import 'package:campus/controles/sqlite/dao/aviso_dao_sqlite.dart';
@@ -126,7 +125,7 @@ class _DispararTurmaProfessorState extends State<DispararAlunosProf> {
               );
             } else {
               var aviso = preencherDTO();
-              AvisoDao dao = ContatoDAOSQLite();
+              AvisoDao dao = AvisoDAOSQLite();
               dao.salvar(aviso);
 
               showDialog(

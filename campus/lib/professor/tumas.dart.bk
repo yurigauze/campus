@@ -1,10 +1,6 @@
 import 'package:campus/controles/dto/turma.dart';
 import 'package:campus/controles/interface/turma_dao_interface.dart';
 import 'package:campus/controles/sqlite/dao/turma_dao_sqlite.dart';
-import 'package:campus/professor/detalhesTurma.dart';
-import 'package:campus/professor/turma/telaTurma.dart';
-import 'package:campus/rota.dart';
-import 'package:campus/widgets/botaoAdicionar.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 import 'package:flutter/material.dart';
@@ -23,7 +19,7 @@ class _TurmaListaState extends State<TurmaLista> {
 
   String turno = '';
 
-  TurmaDao dao = TurmaDAOSQlite();
+  TurmaDao dao = TurmaDAOSQLite();
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +33,11 @@ class _TurmaListaState extends State<TurmaLista> {
       ),
       body: criarLista(context),
       floatingActionButton: BotaoAdicionar(
-          acao: () => Navigator.pushNamed(context, Rota.turmaForm).then((value) => buscarTurma())),
+          acao: () => Navigator.pushNamed(context, Rota.turmaForm)
+              .then((value) => buscarTurma())),
     );
-
   }
 
-  
   Future<List<Turma>> buscarTurma() {
     setState(() {});
     return dao.consultarTodos();
@@ -67,7 +62,7 @@ class _TurmaListaState extends State<TurmaLista> {
     );
   }
 
-    Widget criarItemLista(BuildContext context, Turma turma) {
+  Widget criarItemLista(BuildContext context, Turma turma) {
     return ItemLista(
         turma: turma,
         alterar: () {},
@@ -90,8 +85,6 @@ class _TurmaListaState extends State<TurmaLista> {
     turno = turma.turno;
   }
 }
-
-
 
 class ItemLista extends StatelessWidget {
   final Turma turma;
@@ -117,16 +110,12 @@ class ItemLista extends StatelessWidget {
           Text(turma.turno),
         ],
       ),
-        onTap: () {
+      onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
-            builder: (context) => TurmaForm()
-          ),
+          MaterialPageRoute(builder: (context) => TurmaForm()),
         );
       },
-
     );
   }
 }
-
