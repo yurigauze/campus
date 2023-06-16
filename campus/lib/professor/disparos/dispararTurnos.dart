@@ -1,7 +1,11 @@
 import 'package:campus/controles/dto/aviso.dart';
+import 'package:campus/controles/dto/turno.dart';
 
 import 'package:campus/controles/interface/aviso_dao_interface.dart';
+import 'package:campus/controles/interface/turno_dao_inerface.dart';
 import 'package:campus/controles/sqlite/dao/aviso_dao_sqlite.dart';
+import 'package:campus/controles/sqlite/dao/turno_dao_sqlite.dart';
+
 import 'package:flutter/material.dart';
 
 class DispararTurnosProfessor extends StatelessWidget {
@@ -11,14 +15,14 @@ class DispararTurnosProfessor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Disparar para Turma',
+      title: 'Disparar para Turno',
       home: Scaffold(
         appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          title: Text('Disparar para Turma'),
+          title: Text('Disparar para Turno'),
         ),
         body: DispararTurnoProf(),
       ),
@@ -32,9 +36,31 @@ class DispararTurnoProf extends StatefulWidget {
 }
 
 class _DispararTurmaProfessorState extends State<DispararTurnoProf> {
+  final formkey = GlobalKey<FormState>();
+  dynamic id;
+  AvisoDao dao = AvisoDAOSQLite();
+
   TextEditingController _Titulo = TextEditingController();
   TextEditingController _Texto = TextEditingController();
+  String? _selectedItem;
+  Turno? turnoSelecionado;
+  List<Turno> turnos = [];
 
+  @override
+  void initState(){
+    super.initState();
+    turnoSelecionado = turnos.isNotEmpty ? turnos[0] : null;
+    buscarTurnos();
+  }
+
+  Future<void> buscarTurnos() async{
+    TurnoDao turnoDAO = TurnoDAOSQLite();
+    List<Turno> listaTurnos = await turnoDAO.consultarTodos();
+    setState(() {
+      turnos =listaTurnos;
+    });
+  }
+  
   @override
   void dispose() {
     _Titulo.dispose();
@@ -42,45 +68,37 @@ class _DispararTurmaProfessorState extends State<DispararTurnoProf> {
     super.dispose();
   }
 
-  String? _selectedItem;
+ 
 
-  dynamic id;
+
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Center(child: Container(
+      width: 390,
+      margin: EdgeInsets.only(top: 16),
+      child: Column(
       children: [
         Row(
           children: [
             Text('Selecione o Turno:  '),
-            DropdownButton<String>(
-              value: _selectedItem,
-              items: [
-                DropdownMenuItem(
-                  child: Text("Matutino"),
-                  value: "Matutino",
-                ),
-                DropdownMenuItem(
-                  child: Text("Vespertino"),
-                  value: "Vespertino",
-                ),
-                DropdownMenuItem(
-                  child: Text("Integral"),
-                  value: "Matheus",
-                ),
-                DropdownMenuItem(
-                  child: Text("Noturno"),
-                  value: "Noturno",
-                ),
-              ],
-              onChanged: (value) {
+            DropdownButton<Turno>(
+              value: turnoSelecionado,
+              onChanged: (Turno? novoTurno) {
                 setState(() {
-                  _selectedItem = value;
+                  turnoSelecionado = novoTurno;
+                  _selectedItem = novoTurno?.nome;
                 });
               },
-            ),
-          ],
+              items: turnos.map((Turno turno){
+                return DropdownMenuItem<Turno>(
+                  value: turno,
+                  child: Text(turno.nome),
+                );
+              }).toList(),
         ),
+       ] ),
+        
         SizedBox(
           width: 50,
           height: 10, // Espaço desejado
@@ -100,6 +118,7 @@ class _DispararTurmaProfessorState extends State<DispararTurnoProf> {
           height: 10, // Espaço desejado
         ),
         Card(
+            color: const Color.fromARGB(255, 235, 235, 235),
             child: Padding(
           padding: EdgeInsets.all(8.0),
           child: TextField(
@@ -114,12 +133,12 @@ class _DispararTurmaProfessorState extends State<DispararTurnoProf> {
             var titulo = _Titulo.text;
             var texto = _Texto.text;
 
-            if (_selectedItem == null || _selectedItem?.isEmpty == true) {
+            if (turnoSelecionado == null || titulo == null || texto == null) {
               showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
                   title: Text("Erro"),
-                  content: Text("Selecione um turno."),
+                  content: Text("Campos em branco."),
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.pop(context),
@@ -136,8 +155,7 @@ class _DispararTurmaProfessorState extends State<DispararTurnoProf> {
               showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
-                  title: Text("Enviar para o(a) Aluno(a) $_selectedItem"),
-                  content: Text("Titulo: $titulo \nTexto: $texto"),
+                  content: Text("Enviado para a turno: $_selectedItem"),
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.pop(context),
@@ -160,7 +178,9 @@ class _DispararTurmaProfessorState extends State<DispararTurnoProf> {
             ),
           ),
         ),
-      ],
+      ]
+      ),
+    ),
     );
   }
 

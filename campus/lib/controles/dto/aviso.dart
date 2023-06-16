@@ -1,10 +1,17 @@
+import 'package:campus/controles/dto/aluno.dart';
+import 'package:campus/controles/dto/turma.dart';
+import 'package:campus/controles/dto/turno.dart';
+
 class Aviso {
   final dynamic id;
   final String titulo;
   final String corpo;
-  final String? adicional;
+  final Turno? turno;
+  final Aluno? aluno;
+  final Turma? turma;
 
-  Aviso({this.id, required this.titulo, required this.corpo, this.adicional});
+
+  Aviso({this.id, required this.titulo, required this.corpo, this.turno, this.aluno, this.turma});
 
   @override
   String toString() {
@@ -12,7 +19,9 @@ class Aviso {
       $id
       $titulo 
       $corpo
-      $adicional
+      $turno
+      $aluno
+      $turma
     ''';
   }
 }

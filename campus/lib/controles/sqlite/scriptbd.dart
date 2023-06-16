@@ -11,6 +11,16 @@ CREATE TABLE turno(
   ,turno_id INTEGER NOT NULL
   ,FOREIGN KEY (turno_id) REFERENCES turno (id)
 )''',
+  '''CREATE TABLE aluno(
+  id INTEGER NOT NULL PRIMARY KEY
+  ,nome VARCHAR(200) NOT NULL
+  ,cpf CHAR(12) NOT NULL
+  ,email VARCHAR(200) NOT NULL
+  ,password VARCHAR(200) NOT NULL
+  ,telefone VARCHAR(13) NOT NULL
+  ,turma_id INTEGER NOT NULL
+  ,FOREIGN KEY (turma_id) REFERENCES turma (id)
+)''',
   '''
  CREATE TABLE aviso(
     id INTEGER NOT NULL PRIMARY KEY
@@ -50,6 +60,10 @@ VALUES ('2º Engenharia de S.',1)
   '''
 INSERT INTO turma (nome, turno_id)
 VALUES ('3º Engenharia de S.',2)
+''',
+  '''
+INSERT INTO aluno (nome, cpf, email, password, telefone, turma_id)
+VALUES ('Yuri Gauze', '11149579927', 'yuri@gmail.com', '123456', '4499999999', '1')
 ''',
   '''
 INSERT INTO aviso (titulo, corpo)

@@ -56,7 +56,7 @@ class _AdicionarTurmaState extends State<AdicionarTurma> {
       ),
       body: Center(
         child: Container(
-          width: 400,
+          width: 390,
           margin: EdgeInsets.only(top: 16),
           child: Column(
             children: [

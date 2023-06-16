@@ -9,7 +9,9 @@ class AvisoDAOSQLite implements AvisoDao {
         id: resultado['id'],
         titulo: resultado['titulo'],
         corpo: resultado['corpo'],
-        adicional: resultado['resultado']);
+        turma: resultado['turma'],
+        turno: resultado['turno'],
+        aluno: resultado['aluno']);
   }
 
   @override
