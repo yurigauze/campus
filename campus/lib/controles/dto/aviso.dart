@@ -10,8 +10,13 @@ class Aviso {
   final Aluno? aluno;
   final Turma? turma;
 
-
-  Aviso({this.id, required this.titulo, required this.corpo, this.turno, this.aluno, this.turma});
+  Aviso(
+      {this.id,
+      required this.titulo,
+      required this.corpo,
+      this.turno,
+      this.aluno,
+      this.turma});
 
   @override
   String toString() {
