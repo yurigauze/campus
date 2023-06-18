@@ -26,7 +26,25 @@ CREATE TABLE turno(
     id INTEGER NOT NULL PRIMARY KEY
     ,titulo VARCHAR(200) NOT NULL
     ,corpo CHAR(16) NOT NULL
-    ,adicional VARCHAR(150)
+    ,turma_id INTEGER
+    ,turno_id INTEGER
+    ,aluno_id INTEGER
+    ,FOREIGN KEY (turma_id) REFERENCES turma (id)
+    ,FOREIGN KEY (turno_id) REFERENCES turno (id)
+    ,FOREIGN KEY (aluno_id) REFERENCES aluno (id)
+
+  )
+''',
+  '''
+  CREATE TABLE avisosreferencias(
+    aviso_id INTEGER NOT NULL
+    ,turma_id INTEGER
+    ,turno_id INTEGER
+    ,aluno_id INTEGER
+    ,FOREIGN KEY (aviso_id) REFERENCES aviso (id)
+    ,FOREIGN KEY (turma_id) REFERENCES turma (id)
+    ,FOREIGN KEY (turno_id) REFERENCES turno (id)
+    ,FOREIGN KEY (aluno_id) REFERENCES aluno (id)
   )
 '''
 ];
@@ -66,15 +84,15 @@ INSERT INTO aluno (nome, cpf, email, password, telefone, turma_id)
 VALUES ('Yuri Gauze', '11149579927', 'yuri@gmail.com', '123456', '4499999999', '1')
 ''',
   '''
-INSERT INTO aviso (titulo, corpo)
-VALUES ('Aviso 1','Corpo Aviso 1')
+INSERT INTO aviso (titulo, corpo, turma_id)
+VALUES ('Aviso 1','Corpo Aviso 1', 2)
 ''',
   '''
-INSERT INTO aviso (titulo, corpo, adicional)
-VALUES ('Aviso 2','Corpo Aviso 2', 'Noturno')
+INSERT INTO aviso (titulo, corpo, turno_id)
+VALUES ('Aviso 2','Corpo Aviso 2', '1')
 ''',
   '''
-INSERT INTO aviso (titulo, corpo)
-VALUES ('Aviso 3','Corpo aviso 3')
+INSERT INTO aviso (titulo, corpo, aluno_id)
+VALUES ('Aviso 3','Corpo aviso 3', 1)
 '''
 ];

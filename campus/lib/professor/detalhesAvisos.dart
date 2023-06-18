@@ -4,7 +4,16 @@ import 'package:flutter/material.dart';
 class DetalhesAvisoScreen extends StatelessWidget {
   final Aviso aviso;
 
-  const DetalhesAvisoScreen({required this.aviso});
+  DetalhesAvisoScreen({required this.aviso});
+
+  String turma = '', turno = '', alunos = '', texto = '';
+
+  void atribuirNome() {
+    turma = aviso.turma!.nome;
+    turno = aviso.turno!.nome;
+    alunos = aviso.aluno!.nome;
+    texto = turma + turno + alunos;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +32,13 @@ class DetalhesAvisoScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 16),
-                if (aviso.adicional != null && aviso.adicional!.isNotEmpty)
-                  Text(
-                    'Aviso enviado para:',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                if (aviso.adicional != null && aviso.adicional!.isNotEmpty)
-                  Text(aviso.adicional!),
+                Text(
+                  'Aviso enviado para:',
+                  style: TextStyle(fontSize: 16),
+                ),
+                if (aviso.turno != null) Text(aviso.turno?.nome ?? ''),
+                if (aviso.turma != null) Text(aviso.turma?.nome ?? ''),
+                if (aviso.aluno != null) Text(aviso.aluno?.nome ?? ''),
                 SizedBox(height: 16),
                 Text(
                   aviso.corpo,

@@ -73,8 +73,16 @@ class ItemLista extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Visibility(
-            visible: aviso.adicional != null,
-            child: Text(aviso.adicional ?? ''),
+            visible: aviso.turno != null ||
+                aviso.aluno != null ||
+                aviso.turma != null,
+            child: Column(
+              children: [
+                if (aviso.turno != null) Text('Turno: ${aviso.turno!.nome}'),
+                if (aviso.aluno != null) Text('Aluno: ${aviso.aluno!.nome}'),
+                if (aviso.turma != null) Text('Turma: ${aviso.turma!.nome}'),
+              ],
+            ),
           ),
           Text(aviso.corpo),
         ],

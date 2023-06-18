@@ -43,13 +43,13 @@ class _DispararTurmaProfessorState extends State<DispararTurmaProf> {
   List<Turma> turma = [];
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    turmaSelecionado = turma.isNotEmpty ?  turma[0] : null;
+    turmaSelecionado = turma.isNotEmpty ? turma[0] : null;
     buscarTurmas();
   }
 
-  Future<void> buscarTurmas() async{
+  Future<void> buscarTurmas() async {
     TurmaDao turmaDao = TurmaDAOSQLite();
     List<Turma> listaTurmas = await turmaDao.consultarTodos();
     setState(() {
@@ -57,15 +57,12 @@ class _DispararTurmaProfessorState extends State<DispararTurmaProf> {
     });
   }
 
-
   @override
   void dispose() {
     _Titulo.dispose();
     _Texto.dispose();
     super.dispose();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -182,13 +179,13 @@ class _DispararTurmaProfessorState extends State<DispararTurmaProf> {
       id: id,
       titulo: _Titulo.text,
       corpo: _Texto.text,
-      adicional: _selectedItem ?? "",
+      turma: turmaSelecionado,
     );
   }
 
   void preencherCampos(Aviso aviso) {
     _Titulo.text = aviso.titulo;
     _Texto.text = aviso.corpo;
-    _selectedItem = aviso.adicional;
+    turmaSelecionado = aviso.turma;
   }
 }

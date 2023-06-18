@@ -157,6 +157,6 @@ class _AdicionarTurmaState extends State<AdicionarTurma> {
 
   void preencherCampos(Turma turma) {
     _Nome.text = turma.nome;
-    turnoSelecionados = turma.turno.id;
+    turnoSelecionados = turma.turno;
   }
 }

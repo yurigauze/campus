@@ -47,20 +47,20 @@ class _DispararTurmaProfessorState extends State<DispararTurnoProf> {
   List<Turno> turnos = [];
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     turnoSelecionado = turnos.isNotEmpty ? turnos[0] : null;
     buscarTurnos();
   }
 
-  Future<void> buscarTurnos() async{
+  Future<void> buscarTurnos() async {
     TurnoDao turnoDAO = TurnoDAOSQLite();
     List<Turno> listaTurnos = await turnoDAO.consultarTodos();
     setState(() {
-      turnos =listaTurnos;
+      turnos = listaTurnos;
     });
   }
-  
+
   @override
   void dispose() {
     _Titulo.dispose();
@@ -68,19 +68,14 @@ class _DispararTurmaProfessorState extends State<DispararTurnoProf> {
     super.dispose();
   }
 
- 
-
-
-
   @override
   Widget build(BuildContext context) {
-    return Center(child: Container(
-      width: 390,
-      margin: EdgeInsets.only(top: 16),
-      child: Column(
-      children: [
-        Row(
-          children: [
+    return Center(
+      child: Container(
+        width: 390,
+        margin: EdgeInsets.only(top: 16),
+        child: Column(children: [
+          Row(children: [
             Text('Selecione o Turno:  '),
             DropdownButton<Turno>(
               value: turnoSelecionado,
@@ -90,97 +85,96 @@ class _DispararTurmaProfessorState extends State<DispararTurnoProf> {
                   _selectedItem = novoTurno?.nome;
                 });
               },
-              items: turnos.map((Turno turno){
+              items: turnos.map((Turno turno) {
                 return DropdownMenuItem<Turno>(
                   value: turno,
                   child: Text(turno.nome),
                 );
               }).toList(),
-        ),
-       ] ),
-        
-        SizedBox(
-          width: 50,
-          height: 10, // Espaço desejado
-        ),
-        TextField(
-          controller: _Titulo,
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: 5),
-            hintText: 'Titulo do Aviso',
-            border: OutlineInputBorder(),
+            ),
+          ]),
+          SizedBox(
+            width: 50,
+            height: 10, // Espaço desejado
           ),
-          style: TextStyle(fontSize: 18),
-          maxLength: 50,
-        ),
-        SizedBox(
-          width: 50,
-          height: 10, // Espaço desejado
-        ),
-        Card(
-            color: const Color.fromARGB(255, 235, 235, 235),
-            child: Padding(
-          padding: EdgeInsets.all(8.0),
-          child: TextField(
-            controller: _Texto,
-            maxLines: 8, //or null
-            maxLength: 500,
-            decoration: InputDecoration.collapsed(hintText: "Qual o aviso?"),
+          TextField(
+            controller: _Titulo,
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.symmetric(vertical: 5),
+              hintText: 'Titulo do Aviso',
+              border: OutlineInputBorder(),
+            ),
+            style: TextStyle(fontSize: 18),
+            maxLength: 50,
           ),
-        )),
-        ElevatedButton(
-          onPressed: () {
-            var titulo = _Titulo.text;
-            var texto = _Texto.text;
-
-            if (turnoSelecionado == null || titulo == null || texto == null) {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: Text("Erro"),
-                  content: Text("Campos em branco."),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: Text("OK"),
-                    ),
-                  ],
+          SizedBox(
+            width: 50,
+            height: 10, // Espaço desejado
+          ),
+          Card(
+              color: const Color.fromARGB(255, 235, 235, 235),
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: TextField(
+                  controller: _Texto,
+                  maxLines: 8, //or null
+                  maxLength: 500,
+                  decoration:
+                      InputDecoration.collapsed(hintText: "Qual o aviso?"),
                 ),
-              );
-            } else {
-              var aviso = preencherDTO();
-              AvisoDao dao = AvisoDAOSQLite();
-              dao.salvar(aviso);
+              )),
+          ElevatedButton(
+            onPressed: () {
+              var titulo = _Titulo.text;
+              var texto = _Texto.text;
 
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  content: Text("Enviado para a turno: $_selectedItem"),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: Text("Fechar"),
-                    ),
-                  ],
-                ),
-              );
-            }
-          },
-          child: Container(
-            height: 40,
-            width: 70,
-            child: Row(
-              children: [
-                Text('Enviar'),
-                Text(' '),
-                Icon(Icons.send, size: 24),
-              ],
+              if (turnoSelecionado == null || titulo == null || texto == null) {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Text("Erro"),
+                    content: Text("Campos em branco."),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text("OK"),
+                      ),
+                    ],
+                  ),
+                );
+              } else {
+                var aviso = preencherDTO();
+                AvisoDao dao = AvisoDAOSQLite();
+                dao.salvar(aviso);
+
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    content: Text("Enviado para a turno: $_selectedItem"),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text("Fechar"),
+                      ),
+                    ],
+                  ),
+                );
+              }
+            },
+            child: Container(
+              height: 40,
+              width: 70,
+              child: Row(
+                children: [
+                  Text('Enviar'),
+                  Text(' '),
+                  Icon(Icons.send, size: 24),
+                ],
+              ),
             ),
           ),
-        ),
-      ]
+        ]),
       ),
-    ),
     );
   }
 
@@ -189,13 +183,7 @@ class _DispararTurmaProfessorState extends State<DispararTurnoProf> {
       id: id,
       titulo: _Titulo.text,
       corpo: _Texto.text,
-      adicional: _selectedItem ?? "",
+      turno: turnoSelecionado,
     );
-  }
-
-  void preencherCampos(Aviso aviso) {
-    _Titulo.text = aviso.titulo;
-    _Texto.text = aviso.corpo;
-    _selectedItem = aviso.adicional;
   }
 }
