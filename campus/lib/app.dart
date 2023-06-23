@@ -1,4 +1,5 @@
 import 'package:campus/Avisos.dart';
+import 'package:campus/contatos.dart';
 import 'package:campus/cursos/cursoSuperior.dart';
 import 'package:campus/cursos/tecnicoIntegrado.dart';
 import 'package:campus/infraestrutura/administracao.dart';
@@ -50,6 +51,7 @@ class App extends StatelessWidget {
         'disparoTurnoProfessor': (context) => DispararTurnosProfessor(),
         'turmaProfessor': (context) => TurnoLista(),
         'adicionarTurnos': (context) => AdicionarTurma(),
+        'contatos':(context) => Contatos(),
       },
     );
   }

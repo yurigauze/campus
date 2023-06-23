@@ -1,3 +1,4 @@
+import 'package:campus/contatos.dart';
 import 'package:campus/introducao.dart';
 import 'package:campus/professor/disparos/disparosTodos.dart';
 import 'package:campus/professor/turma2.dart';
@@ -216,6 +217,17 @@ class HomeProfessor extends StatelessWidget {
               },
             ),
             Divider(),
+            
+            ListTile(
+              leading: Icon(Icons.phone_outlined, color: Colors.black),
+              title: const Text('Contatos'),
+              onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context)=>Contatos()),
+                );
+              },
+            ),
             ListTile(
               title: Text('Sair'),
               onTap: () {
