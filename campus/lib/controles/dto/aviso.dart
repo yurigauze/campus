@@ -6,17 +6,13 @@ class Aviso {
   final dynamic id;
   final String titulo;
   final String corpo;
-  final Turno? turno;
-  final Aluno? aluno;
-  final Turma? turma;
+  final String? informacao;
 
   Aviso(
       {this.id,
       required this.titulo,
       required this.corpo,
-      this.turno,
-      this.aluno,
-      this.turma});
+      this.informacao,});
 
   @override
   String toString() {
@@ -24,9 +20,7 @@ class Aviso {
       $id
       $titulo 
       $corpo
-      $turno
-      $aluno
-      $turma
+      $informacao
     ''';
   }
 }
