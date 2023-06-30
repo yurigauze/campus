@@ -35,8 +35,13 @@ class _DispararTurmaProfessorState extends State<DispararTurmaProf> {
   TextEditingController _Titulo = TextEditingController();
   TextEditingController _Texto = TextEditingController();
   String? _selectedItem;
-  Turma? turmaSelecionado;
+  Turma? turmaSelecionado;// Objeto Turma nullable
   dynamic id;
+
+
+
+
+
 
   AvisoDao dao = AvisoDAOSQLite();
 
@@ -139,9 +144,12 @@ class _DispararTurmaProfessorState extends State<DispararTurmaProf> {
                   ),
                 );
               } else {
+                int? idTurma = turmaSelecionado?.id;
+
+
                 var aviso = preencherDTO();
                 AvisoDao dao = AvisoDAOSQLite();
-                dao.salvar(aviso);
+                dao.salvarAvisoTurma(aviso, idTurma ?? 0);
 
                 showDialog(
                   context: context,
@@ -179,13 +187,7 @@ class _DispararTurmaProfessorState extends State<DispararTurmaProf> {
       id: id,
       titulo: _Titulo.text,
       corpo: _Texto.text,
-      turma: turmaSelecionado,
+      
     );
-  }
-
-  void preencherCampos(Aviso aviso) {
-    _Titulo.text = aviso.titulo;
-    _Texto.text = aviso.corpo;
-    turmaSelecionado = aviso.turma;
   }
 }

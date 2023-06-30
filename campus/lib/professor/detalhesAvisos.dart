@@ -9,9 +9,6 @@ class DetalhesAvisoScreen extends StatelessWidget {
   String turma = '', turno = '', alunos = '', texto = '';
 
   void atribuirNome() {
-    turma = aviso.turma!.nome;
-    turno = aviso.turno!.nome;
-    alunos = aviso.aluno!.nome;
     texto = turma + turno + alunos;
   }
 
@@ -32,13 +29,19 @@ class DetalhesAvisoScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 16),
-                Text(
-                  'Aviso enviado para:',
-                  style: TextStyle(fontSize: 16),
+                  Visibility(
+                  visible: aviso.informacao != null,
+                  child: Column(
+                    children: [
+                      Text(
+                        'Aviso enviado para:',
+                        style: TextStyle(fontSize: 16),
+                      ),                     
+                      if (aviso.informacao != null)
+                        Text('Turno: ${aviso.informacao}'),
+                    ],
+                  ),
                 ),
-                if (aviso.turno != null) Text(aviso.turno?.nome ?? ''),
-                if (aviso.turma != null) Text(aviso.turma?.nome ?? ''),
-                if (aviso.aluno != null) Text(aviso.aluno?.nome ?? ''),
                 SizedBox(height: 16),
                 Text(
                   aviso.corpo,

@@ -137,9 +137,11 @@ class _DispararTurmaProfessorState extends State<DispararAlunosProf> {
                   ),
                 );
               } else {
+
+                int? idTurma = alunoSelecionado?.id;
                 var aviso = preencherDTO();
                 AvisoDao dao = AvisoDAOSQLite();
-                dao.salvar(aviso);
+                dao.salvarAvisoAluno(aviso, idTurma ?? 0);
 
                 showDialog(
                   context: context,
@@ -177,7 +179,6 @@ class _DispararTurmaProfessorState extends State<DispararAlunosProf> {
       id: id,
       titulo: _Titulo.text,
       corpo: _Texto.text,
-      aluno: alunoSelecionado,
     );
   }
 }
