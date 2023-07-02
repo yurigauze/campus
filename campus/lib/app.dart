@@ -1,3 +1,8 @@
+import 'package:campus/Adm/AlunoForm.dart';
+import 'package:campus/Adm/AlunoLista.dart';
+import 'package:campus/Adm/TurmaForm.dart';
+import 'package:campus/Adm/homeAdministra%C3%A7%C3%A3o.dart';
+import 'package:campus/Adm/TurmaLista.dart';
 import 'package:campus/Avisos.dart';
 import 'package:campus/contatos.dart';
 import 'package:campus/cursos/cursoSuperior.dart';
@@ -11,7 +16,7 @@ import 'package:campus/professor/disparos/dispararAlunos.dart';
 import 'package:campus/professor/disparos/dispararTurma.dart';
 import 'package:campus/professor/disparos/dispararTurnos.dart';
 import 'package:campus/professor/disparos/disparosTodos.dart';
-import 'package:campus/professor/turnosProfessor.dart';
+import 'package:campus/Adm/TurnoLista.dart';
 import 'package:flutter/material.dart';
 
 import 'cursos/posGraduacao.dart';
@@ -51,7 +56,12 @@ class App extends StatelessWidget {
         'disparoTurnoProfessor': (context) => DispararTurnosProfessor(),
         'turmaProfessor': (context) => TurnoLista(),
         'adicionarTurnos': (context) => AdicionarTurma(),
-        'contatos':(context) => Contatos(),
+        'contatos': (context) => Contatos(),
+        'administrador': (context) => HomeAdministracao(),
+        'turmaForm': (context) => DetalhesTurmaScreen(),
+        'turmas': (context) => TurmasLista(),
+        'alunoLista': (context) => AlunoLista(),
+        'alunoForm': (context) => AlunoForm(),
       },
     );
   }

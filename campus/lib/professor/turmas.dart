@@ -4,8 +4,6 @@ import 'package:campus/controles/interface/turma_dao_interface.dart';
 import 'package:campus/controles/interface/turno_dao_inerface.dart';
 import 'package:campus/controles/sqlite/dao/turma_dao_sqlite.dart';
 import 'package:campus/controles/sqlite/dao/turno_dao_sqlite.dart';
-import 'package:campus/professor/adicionarTurma.dart';
-import 'package:campus/professor/detalhesTurma.dart';
 import 'package:flutter/material.dart';
 
 class TurmaLista extends StatefulWidget {
@@ -51,9 +49,12 @@ class _TurmaListaState extends State<TurmaLista> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AdicionarTurma()),
+          floatingActionButton:
+          FloatingActionButton(
+            onPressed: () {
+              abrirDialogOpcoes(context);
+            },
+            child: Icon(Icons.add),
           );
         },
         child: Icon(Icons.add),
@@ -74,6 +75,45 @@ class _TurmaListaState extends State<TurmaLista> {
         },
       ),
     );
+  }
+
+  late DropdownButton<Turma> campoOpcoes;
+  late List<Turma> listaTurma;
+  late Turma turmaSelecionado;
+
+  void abrirDialogOpcoes(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        campoOpcoes = criarCampoOpcoes(listaTurma);
+        return AlertDialog(
+          actions: [
+            campoOpcoes,
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  DropdownButton<Turma> criarCampoOpcoes(List<Turma> turma) {
+    return DropdownButton<Turma>(
+        hint: const Text('Turma'),
+        isExpanded: true,
+        items: turma
+            .map((turma) =>
+                DropdownMenuItem(value: turma, child: Text(turma.nome)))
+            .toList(),
+        onChanged: (value) {
+          setState(() {
+            if (value != null) turmaSelecionado = value;
+          });
+        });
   }
 
   Widget criarItemLista(BuildContext context, Turma turma) {
@@ -116,14 +156,6 @@ class ItemLista extends StatelessWidget {
           Text(turma.turno.nome),
         ],
       ),
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => DetalhesTurmaScreen(turma: turma),
-          ),
-        );
-      },
     );
   }
 }

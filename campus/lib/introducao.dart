@@ -1,10 +1,72 @@
+import 'package:campus/controles/sqlite/conexao.dart';
 import 'package:flutter/material.dart';
-import 'package:campus/app.dart';
 import 'package:flutter/services.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 
 class Introducao extends StatelessWidget {
   TextEditingController _cpfController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+
+  void realizarLogin(String cpf, String senha, BuildContext context) async {
+    String a = cpf;
+    String b = senha;
+
+    Database db = await Conexao.criar();
+
+    if (a == '1' && b == '1') {
+      abrirAdm(context);
+    }
+
+    List<Map<String, dynamic>> resultadoAlunos = await db.rawQuery(
+        'SELECT * FROM aluno WHERE cpf = ? AND password = ?', [cpf, senha]);
+
+    List<Map<String, dynamic>> resultadoProfessores = await db.rawQuery(
+        'SELECT * FROM professor WHERE cpf = ? AND password = ?', [cpf, senha]);
+
+    if (resultadoAlunos.isNotEmpty) {
+      abrirTelaAluno(context);
+    } else if (resultadoProfessores.isNotEmpty) {
+      abrirTelaProfessor(context);
+    } else {
+      exibirMensagemErro(context);
+    }
+  }
+
+  void abrirTelaAluno(BuildContext context) {
+    print('Abrir tela do aluno');
+    Navigator.pushNamed(context, 'homeAluno');
+  }
+
+  void abrirTelaProfessor(BuildContext context) {
+    print('Abrir tela do professor');
+    Navigator.pushNamed(context, 'homeProfessor');
+  }
+
+  void abrirAdm(BuildContext context) {
+    print('Abrir tela do ADM');
+    Navigator.pushNamed(context, 'administrador');
+  }
+
+  void exibirMensagemErro(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Erro'),
+          content: Text('CPF ou senha inválidos'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,34 +114,10 @@ class Introducao extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   var usuario = _cpfController.text;
                   var senha = _passwordController.text;
-                  if (usuario == "111" && senha == "professor") {
-                    Navigator.pushNamed(context, 'homeProfessor');
-                  } else if (usuario == "111" && senha == "aluno") {
-                    Navigator.pushNamed(context, 'homeAluno');
-                  } else {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text("Credenciais invalidas"),
-                          content: Text(
-                            "Usuario ou senha informados estão incorretos. $usuario, $senha  ",
-                          ),
-                          actions: <Widget>[
-                            TextButton(
-                              child: Text("OK"),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  }
+                  realizarLogin(usuario, senha, context);
                 },
                 child: const Text("Login"),
               ),

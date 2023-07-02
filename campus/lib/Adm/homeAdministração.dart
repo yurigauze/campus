@@ -1,15 +1,14 @@
+import 'package:campus/Adm/AlunoLista.dart';
+import 'package:campus/Adm/ProfessorLista.dart';
+import 'package:campus/Adm/TurmaLista.dart';
 import 'package:campus/contatos.dart';
 import 'package:campus/introducao.dart';
-import 'package:campus/professor/disparos/disparosTodos.dart';
-import 'package:campus/professor/turmas.dart';
 import 'package:campus/Adm/TurnoLista.dart';
 import 'package:flutter/material.dart';
 
-import 'disparos/dispararAlunos.dart';
-import 'disparos/dispararTurma.dart';
-import 'disparos/dispararTurnos.dart';
+class HomeAdministracao extends StatelessWidget {
+  const HomeAdministracao({super.key});
 
-class HomeProfessor extends StatelessWidget {
   Widget criarContainer() {
     return Card(
       child: Container(
@@ -24,7 +23,7 @@ class HomeProfessor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Disparar Avisos")),
+      appBar: AppBar(title: const Text("Início")),
       drawer: buildDrawer(context),
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -39,22 +38,21 @@ class HomeProfessor extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => DispararTodosProfessor()),
+                        MaterialPageRoute(builder: (context) => AlunoLista()),
                       );
                     },
                     child: Container(
                       width: 170,
                       height: 170,
                       color: Color.fromARGB(255, 235, 83, 96),
-                      child: Center(
+                      child: const Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(Icons.groups_outlined,
                                 size: 50.0, color: Colors.white),
                             Text(
-                              'Disparar para todos',
+                              'Gerenciar Alunos',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize:
@@ -72,22 +70,21 @@ class HomeProfessor extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => DispararTurmaProfessor()),
+                        MaterialPageRoute(builder: (context) => TurmasLista()),
                       );
                     },
                     child: Container(
                       width: 170,
                       height: 170,
                       color: Color.fromARGB(255, 112, 204, 89),
-                      child: Center(
+                      child: const Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(Icons.class_outlined,
                                 size: 50.0, color: Colors.white),
                             Text(
-                              'Disparar para turma',
+                              'Gerenciar Turmas',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize:
@@ -108,25 +105,24 @@ class HomeProfessor extends StatelessWidget {
                 Card(
                   child: InkWell(
                     onTap: () {
-                      // ação a ser executada ao clicar no Card
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => DispararAlunosProfessor()),
+                            builder: (context) => ProfessorLista()),
                       );
                     },
                     child: Container(
                       width: 170,
                       height: 170,
                       color: Colors.blue,
-                      child: Center(
+                      child: const Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(Icons.people_outline,
                                 size: 50.0, color: Colors.white),
                             Text(
-                              'Disparar para alunos',
+                              'Gerenciar Professores',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize:
@@ -142,25 +138,23 @@ class HomeProfessor extends StatelessWidget {
                 Card(
                   child: InkWell(
                     onTap: () {
-                      // ação a ser executada ao clicar no Card
                       Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => DispararTurnosProfessor()),
-                      );
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TurnoLista()));
                     },
                     child: Container(
                       width: 170,
                       height: 170,
                       color: Color.fromARGB(255, 192, 102, 228),
-                      child: Center(
+                      child: const Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(Icons.timelapse_outlined,
                                 size: 50.0, color: Colors.white),
                             Text(
-                              'Disparar para turnos',
+                              'Gerenciar Turnos',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize:
@@ -187,7 +181,7 @@ class HomeProfessor extends StatelessWidget {
         child: Column(
           children: [
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.notifications_active_outlined,
                 color: Colors.black,
               ),
@@ -197,17 +191,14 @@ class HomeProfessor extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: Icon(Icons.school_outlined, color: Colors.black),
+              leading: const Icon(Icons.school_outlined, color: Colors.black),
               title: const Text('Turmas'),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => TurmaLista()),
-                );
+                Navigator.popAndPushNamed(context, 'turmas');
               },
             ),
             ListTile(
-              leading: Icon(Icons.school_outlined, color: Colors.black),
+              leading: const Icon(Icons.school_outlined, color: Colors.black),
               title: const Text('Turnos'),
               onTap: () {
                 Navigator.push(
@@ -218,7 +209,7 @@ class HomeProfessor extends StatelessWidget {
             ),
             Divider(),
             ListTile(
-              leading: Icon(Icons.phone_outlined, color: Colors.black),
+              leading: const Icon(Icons.phone_outlined, color: Colors.black),
               title: const Text('Contatos'),
               onTap: () {
                 Navigator.push(
@@ -228,7 +219,7 @@ class HomeProfessor extends StatelessWidget {
               },
             ),
             ListTile(
-              title: Text('Sair'),
+              title: const Text('Sair'),
               onTap: () {
                 Navigator.pushReplacement(
                   context,
@@ -241,52 +232,4 @@ class HomeProfessor extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget buildDrawer(BuildContext context) {
-  return Drawer(
-    child: SafeArea(
-      child: Column(
-        children: [
-          ListTile(
-            leading: Icon(
-              Icons.notifications_active_outlined,
-              color: Colors.black,
-            ),
-            title: const Text('Avisos'),
-            onTap: () {
-              Navigator.popAndPushNamed(context, 'avisosProfessor');
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.message_outlined, color: Colors.black),
-            title: const Text('Disparar Avisos'),
-            onTap: () {
-              Navigator.popAndPushNamed(context, 'dispararprofessor');
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.school_outlined, color: Colors.black),
-            title: const Text('Turmas'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => TurmaLista()),
-              );
-            },
-          ),
-          Divider(),
-          ListTile(
-            title: Text('Sair'),
-            onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => Introducao()),
-              );
-            },
-          ),
-        ],
-      ),
-    ),
-  );
 }

@@ -7,15 +7,17 @@ class Professor {
   final String email;
   final String password;
   final String telefone;
+  final Turma turma;
 
-  Professor(
-      {this.id,
-      required this.nome,
-      required this.cpf,
-      required this.email,
-      required this.password,
-      required this.telefone,
-      });
+  Professor({
+    this.id,
+    required this.nome,
+    required this.cpf,
+    required this.email,
+    required this.password,
+    required this.telefone,
+    required this.turma,
+  });
 
   @override
   String toString() {
@@ -26,6 +28,7 @@ class Professor {
       $email
       $password
       $telefone 
+      $turma
     ''';
   }
 }
