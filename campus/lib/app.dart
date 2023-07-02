@@ -1,5 +1,7 @@
 import 'package:campus/Adm/AlunoForm.dart';
 import 'package:campus/Adm/AlunoLista.dart';
+import 'package:campus/Adm/ProfessorForm.dart';
+import 'package:campus/Adm/ProfessorLista.dart';
 import 'package:campus/Adm/TurmaForm.dart';
 import 'package:campus/Adm/homeAdministra%C3%A7%C3%A3o.dart';
 import 'package:campus/Adm/TurmaLista.dart';
@@ -62,6 +64,7 @@ class App extends StatelessWidget {
         'turmas': (context) => TurmasLista(),
         'alunoLista': (context) => AlunoLista(),
         'alunoForm': (context) => AlunoForm(),
+        'professorForm': (context) => ProfessorForm(),
       },
     );
   }
