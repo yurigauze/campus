@@ -1,0 +1,30 @@
+import 'package:campus/src/controles/dto/turma.dart';
+
+class Aluno {
+  final dynamic id;
+  final String nome;
+  final String cpf;
+  final String email;
+  final String password;
+  final String telefone;
+
+  Aluno(
+      {this.id,
+      required this.nome,
+      required this.cpf,
+      required this.email,
+      required this.password,
+      required this.telefone});
+
+  @override
+  String toString() {
+    return '''
+      $id
+      $nome
+      $cpf
+      $email
+      $password
+      $telefone 
+    ''';
+  }
+}
