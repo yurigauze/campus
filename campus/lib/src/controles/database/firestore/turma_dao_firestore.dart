@@ -8,12 +8,6 @@ class TurmaDAOFirestore implements TurmaFireDao {
       FirebaseFirestore.instance.collection('turma');
 
   @override
-  Turma consultar(int id) {
-    // TODO: implement consultar
-    throw UnimplementedError();
-  }
-
-  @override
   Future<List<Turma>> consultarTodos() async {
     var result = await turmaCollection.get();
     return result.docs.map((doc) {
@@ -41,17 +35,12 @@ class TurmaDAOFirestore implements TurmaFireDao {
 
   @override
   salvar(Turma turma) {
-    turmaCollection.doc(turma.id).set({
-      'nome': turma.nome,
-      'alunos': turma.alunos
-          .map((aluno) => {
-                'nome': aluno.nome,
-                'cpf': aluno.cpf,
-                'email': aluno.email,
-                'password': aluno.password,
-                'telefone': aluno.telefone,
-              })
-          .toList(),
-    });
+    turmaCollection.doc(turma.id).set({'nome': turma.nome});
+  }
+
+  @override
+  Future<Turma> consultar(int id) {
+    // TODO: implement consultar
+    throw UnimplementedError();
   }
 }

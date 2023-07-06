@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:campus/src/controles/dto/aluno.dart';
 import 'package:campus/src/controles/dto/turma.dart';
 import 'package:campus/src/controles/dto/turno.dart';
@@ -21,7 +23,9 @@ class TurnoDAOFirebase implements TurnoFireDao {
 
     for (QueryDocumentSnapshot doc in snapshot.docs) {
       String nomeTurno = doc['nome'] as String;
-      Turno turno = Turno(nome: nomeTurno, turmas: []);
+      String idTurno = doc.id as String;
+
+      Turno turno = Turno(nome: nomeTurno, turmas: [], descricao: idTurno);
       turnos.add(turno);
     }
 
@@ -37,27 +41,5 @@ class TurnoDAOFirebase implements TurnoFireDao {
   salvar(Turno turno) {
     // Cria um novo documento na coleção "turno"
     DocumentReference turnoDocRef = turnoCollection.doc();
-
-    // Cria uma lista de mapas contendo os dados dos alunos de cada turma
-    List<List<Map<String, dynamic>>> alunosPorTurma = turno.turmas.map((turma) {
-      return turma.alunos.map((aluno) {
-        return {
-          'nome': aluno.nome,
-          'cpf': aluno.cpf,
-          'email': aluno.email,
-          'password': aluno.password,
-          'telefone': aluno.telefone,
-        };
-      }).toList();
-    }).toList();
-
-    // Cria um mapa contendo os dados do turno, incluindo a lista de turmas com os alunos
-    Map<String, dynamic> turnoData = {
-      'nome': turno.nome,
-      'turmas': alunosPorTurma,
-    };
-
-    // Salva o documento do turno no Firebase
-    turnoDocRef.set(turnoData);
   }
 }
