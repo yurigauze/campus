@@ -1,9 +1,11 @@
+import 'package:campus/src/controles/database/firestore/aluno_dao_firebase.dart';
+import 'package:campus/src/controles/database/firestore/avisos_dao_firestore.dart';
 import 'package:campus/src/controles/dto/aluno.dart';
 import 'package:campus/src/controles/dto/aviso.dart';
 import 'package:campus/src/controles/interface/aluno_dao_interface.dart';
 import 'package:campus/src/controles/interface/aviso_dao_interface.dart';
-import 'package:campus/src/controles/sqlite/dao/aluno_dao_sqlite.dart';
-import 'package:campus/src/controles/sqlite/dao/aviso_dao_sqlite.dart';
+import 'package:campus/src/controles/interface/firebase/aluno_interface_Firebase.dart';
+import 'package:campus/src/controles/interface/firebase/aviso_interface_firebase.dart';
 import 'package:flutter/material.dart';
 
 class DispararAlunosProfessor extends StatelessWidget {
@@ -34,7 +36,7 @@ class _DispararTurmaProfessorState extends State<DispararAlunosProf> {
   final formkey = GlobalKey<FormState>();
   TextEditingController _Titulo = TextEditingController();
   TextEditingController _Texto = TextEditingController();
-  AvisoDao dao = AvisoDAOSQLite();
+  AvisoFireDao dao = AvisosDAOFirestore();
   String? _selectedItem;
   Aluno? alunoSelecionado;
   dynamic id;
@@ -48,7 +50,7 @@ class _DispararTurmaProfessorState extends State<DispararAlunosProf> {
   }
 
   Future<void> buscarAlunos() async {
-    AlunoDao alunoDAO = AlunoDAOSQLite();
+    AlunoFireDao alunoDAO = AlunoDAOFirebase();
     List<Aluno> listaAlunos = await alunoDAO.consultarTodos();
     setState(() {
       alunos = listaAlunos;
@@ -137,11 +139,10 @@ class _DispararTurmaProfessorState extends State<DispararAlunosProf> {
                   ),
                 );
               } else {
-
                 int? idTurma = alunoSelecionado?.id;
                 var aviso = preencherDTO();
-                AvisoDao dao = AvisoDAOSQLite();
-                dao.salvarAvisoAluno(aviso, idTurma ?? 0);
+                AvisoFireDao dao = AvisosDAOFirestore();
+                dao.salvar(aviso);
 
                 showDialog(
                   context: context,
@@ -179,6 +180,7 @@ class _DispararTurmaProfessorState extends State<DispararAlunosProf> {
       id: id,
       titulo: _Titulo.text,
       corpo: _Texto.text,
+      informacao: _selectedItem,
     );
   }
 }

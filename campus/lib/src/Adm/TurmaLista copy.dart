@@ -1,36 +1,43 @@
+import 'package:campus/src/Widget/BotaoAdc.dart';
 import 'package:campus/src/Widget/PainelBotoes.dart';
 import 'package:campus/src/controles/database/firestore/turma_dao_firestore.dart';
 import 'package:campus/src/controles/dto/turma.dart';
 import 'package:campus/src/controles/interface/firebase/turma_interface_firebase.dart';
+import 'package:campus/src/controles/interface/turma_dao_interface.dart';
 
 import 'package:flutter/material.dart';
 
-class TurmaLista extends StatefulWidget {
-  const TurmaLista({Key? key}) : super(key: key);
+class TurmasLista extends StatefulWidget {
+  const TurmasLista({Key? key}) : super(key: key);
+
   @override
-  State<TurmaLista> createState() => _TurmaListaState();
+  State<TurmasLista> createState() => _TurmasListaState();
 }
 
-class _TurmaListaState extends State<TurmaLista> {
+class _TurmasListaState extends State<TurmasLista> {
   TurmaFireDao dao = TurmaDAOFirestore();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Lista de Turmas")),
-        body: criarLista(context));
+        appBar: AppBar(title: const Text('Lista Turmas')),
+        body: criarLista(context),
+        floatingActionButton: BotaoAdicionar(
+            acao: () => Navigator.pushNamed(context, 'turmaForm')),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat);
   }
 
   Widget criarLista(BuildContext context) {
     return FutureBuilder(
-      future: buscarTurma(),
+      future: dao.consultarTodos(),
       builder: (context, AsyncSnapshot<List<Turma>> lista) {
         if (!lista.hasData) return const CircularProgressIndicator();
         if (lista.data == null) return const Text('Não há Turmas...');
-        List<Turma> listaTurma = lista.data!;
+        List<Turma> listaTurmas = lista.data!;
         return ListView.builder(
-          itemCount: listaTurma.length,
+          itemCount: listaTurmas.length,
           itemBuilder: (context, indice) {
-            var turma = listaTurma[indice];
+            var turma = listaTurmas[indice];
             return criarItemLista(context, turma);
           },
         );
@@ -46,7 +53,10 @@ class _TurmaListaState extends State<TurmaLista> {
   Widget criarItemLista(BuildContext context, Turma turma) {
     return ItemLista(
         turma: turma,
-        alterar: () {},
+        alterar: () {
+          Navigator.pushNamed(context, 'turmaForm', arguments: turma)
+              .then((value) => buscarTurma());
+        },
         detalhes: () {},
         excluir: () {
           dao.excluir(turma.id);

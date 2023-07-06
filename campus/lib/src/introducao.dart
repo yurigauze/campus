@@ -1,8 +1,5 @@
-import 'package:campus/src/controles/sqlite/conexao.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
 
 class Introducao extends StatelessWidget {
   TextEditingController _cpfController = TextEditingController();
@@ -12,24 +9,8 @@ class Introducao extends StatelessWidget {
     String a = cpf;
     String b = senha;
 
-    Database db = await Conexao.criar();
-
     if (a == '1' && b == '1') {
       abrirAdm(context);
-    }
-
-    List<Map<String, dynamic>> resultadoAlunos = await db.rawQuery(
-        'SELECT * FROM aluno WHERE cpf = ? AND password = ?', [cpf, senha]);
-
-    List<Map<String, dynamic>> resultadoProfessores = await db.rawQuery(
-        'SELECT * FROM professor WHERE cpf = ? AND password = ?', [cpf, senha]);
-
-    if (resultadoAlunos.isNotEmpty) {
-      abrirTelaAluno(context);
-    } else if (resultadoProfessores.isNotEmpty) {
-      abrirTelaProfessor(context);
-    } else {
-      exibirMensagemErro(context);
     }
   }
 

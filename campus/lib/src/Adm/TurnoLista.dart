@@ -1,11 +1,12 @@
+import 'package:campus/src/Adm/TurmaLista.dart';
+import 'package:campus/src/controles/database/firestore/turno_dao_firestore.dart';
 import 'package:campus/src/controles/dto/turno.dart';
-import 'package:campus/src/controles/interface/turno_dao_inerface.dart';
-import 'package:campus/src/controles/sqlite/dao/turno_dao_sqlite.dart';
+import 'package:campus/src/controles/interface/firebase/turno_interface_firebase.dart';
 import 'package:flutter/material.dart';
 
 class TurnoLista extends StatelessWidget {
   TurnoLista({Key? key}) : super(key: key);
-  TurnoDao dao = TurnoDAOSQLite();
+  TurnoFireDao dao = TurnoDAOFirebase();
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class TurnoLista extends StatelessWidget {
             icon: Icon(Icons.arrow_back),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          title: Text('Disparar para Turma'),
+          title: Text('Lista de Turnos'),
         ),
         body: criarLista(context));
   }
@@ -43,7 +44,9 @@ class TurnoLista extends StatelessWidget {
     return ItemLista(
         turno: turno,
         alterar: () {},
-        detalhes: () {},
+        detalhes: () {
+          print(turno);
+        },
         excluir: () {
           dao.excluir(turno.id);
         });
@@ -68,6 +71,7 @@ class ItemLista extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(turno.nome),
+      onTap: detalhes,
     );
   }
 }

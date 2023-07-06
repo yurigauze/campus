@@ -16,7 +16,7 @@ class AvisoLista extends StatelessWidget {
             icon: Icon(Icons.arrow_back),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          title: Text('Disparar para Turma'),
+          title: Text('Avisos'),
         ),
         body: criarLista(context));
   }
@@ -76,7 +76,8 @@ class ItemLista extends StatelessWidget {
             visible: aviso.informacao != null,
             child: Column(
               children: [
-                if (aviso.informacao != null) Text('Turno: ${aviso.informacao}'),              
+                if (aviso.informacao != null)
+                  Text('Turno: ${aviso.informacao}'),
               ],
             ),
           ),

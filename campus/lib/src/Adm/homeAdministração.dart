@@ -1,6 +1,5 @@
 import 'package:campus/src/Adm/AlunoLista.dart';
-import 'package:campus/src/Adm/ProfessorLista.dart';
-import 'package:campus/src/Adm/TurmaLista.dart';
+import 'package:campus/src/Adm/TurmaLista%20copy.dart';
 import 'package:campus/src/contatos.dart';
 import 'package:campus/src/introducao.dart';
 import 'package:campus/src/Adm/TurnoLista.dart';
@@ -105,13 +104,7 @@ class HomeAdministracao extends StatelessWidget {
               children: [
                 Card(
                   child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ProfessorLista()),
-                      );
-                    },
+                    onTap: () {},
                     child: Container(
                       width: 170,
                       height: 170,
@@ -192,7 +185,8 @@ class HomeAdministracao extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.notifications_active_outlined, color: Colors.black),
+              leading: const Icon(Icons.notifications_active_outlined,
+                  color: Colors.black),
               title: const Text('Disparar Avisos'),
               onTap: () {
                 Navigator.push(

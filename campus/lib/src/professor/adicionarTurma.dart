@@ -1,9 +1,10 @@
+import 'package:campus/src/controles/database/firestore/turma_dao_firestore.dart';
 import 'package:campus/src/controles/dto/turma.dart';
 import 'package:campus/src/controles/dto/turno.dart';
+import 'package:campus/src/controles/interface/firebase/turma_interface_firebase.dart';
 import 'package:campus/src/controles/interface/turma_dao_interface.dart';
 import 'package:campus/src/controles/interface/turno_dao_inerface.dart';
-import 'package:campus/src/controles/sqlite/dao/turma_dao_sqlite.dart';
-import 'package:campus/src/controles/sqlite/dao/turno_dao_sqlite.dart';
+
 import 'package:flutter/material.dart';
 import 'package:campus/src/professor/turmas.dart';
 
@@ -19,7 +20,7 @@ class _AdicionarTurmaState extends State<AdicionarTurma> {
 
   dynamic id;
 
-  TurmaDao dao = TurmaDAOSQLite();
+  TurmaFireDao dao = TurmaDAOFirestore();
 
   TextEditingController _Nome = TextEditingController();
 
@@ -32,21 +33,9 @@ class _AdicionarTurmaState extends State<AdicionarTurma> {
     super.dispose();
   }
 
-  List<Turno> turnos = [];
-
   @override
   void initState() {
     super.initState();
-    turnoSelecionado = turnos.isNotEmpty ? turnos[0] : null;
-    buscarTurnos();
-  }
-
-  Future<void> buscarTurnos() async {
-    TurnoDao turnoDAO = TurnoDAOSQLite();
-    List<Turno> listaTurnos = await turnoDAO.consultarTodos();
-    setState(() {
-      turnos = listaTurnos;
-    });
   }
 
   @override
@@ -71,21 +60,6 @@ class _AdicionarTurmaState extends State<AdicionarTurma> {
                 style: TextStyle(fontSize: 18),
                 maxLength: 50,
               ),
-              Text('Selecione um turno:'),
-              DropdownButton<Turno>(
-                value: turnoSelecionado,
-                onChanged: (Turno? novoTurno) {
-                  setState(() {
-                    turnoSelecionado = novoTurno;
-                  });
-                },
-                items: turnos.map((Turno turno) {
-                  return DropdownMenuItem<Turno>(
-                    value: turno,
-                    child: Text(turno.nome),
-                  );
-                }).toList(),
-              ),
               SizedBox(
                 width: 50, // Espaço desejado
               ),
@@ -109,7 +83,7 @@ class _AdicionarTurmaState extends State<AdicionarTurma> {
                     );
                   } else {
                     var turma = preencherDTO();
-                    TurmaDao dao = TurmaDAOSQLite();
+                    TurmaFireDao dao = TurmaDAOFirestore();
                     dao.salvar(turma);
 
                     showDialog(
@@ -150,16 +124,14 @@ class _AdicionarTurmaState extends State<AdicionarTurma> {
   }
 
   Turma preencherDTO() {
-    final selectedTurno = turnoSelecionado ?? turnos.first;
     return Turma(
       id: id,
       nome: _Nome.text,
-      turno: selectedTurno, // Valor padrão caso seja nulo
+      alunos: [], // Valor padrão caso seja nulo
     );
   }
 
   void preencherCampos(Turma turma) {
     _Nome.text = turma.nome;
-    turnoSelecionados = turma.turno;
   }
 }

@@ -7,9 +7,14 @@ class Aluno {
   final String email;
   final String password;
   final String telefone;
-  final Turma turma;
 
-  Aluno({this.id, required this.nome, required this.cpf, required this.email, required this.password, required this.telefone, required this.turma});
+  Aluno(
+      {this.id,
+      required this.nome,
+      required this.cpf,
+      required this.email,
+      required this.password,
+      required this.telefone});
 
   @override
   String toString() {
@@ -20,7 +25,6 @@ class Aluno {
       $email
       $password
       $telefone 
-      $turma
     ''';
   }
 }

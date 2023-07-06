@@ -4,11 +4,13 @@ import 'package:campus/src/Widget/Campo_Telefone.dart';
 import 'package:campus/src/Widget/Campo_email.dart';
 import 'package:campus/src/Widget/Campo_nome.dart';
 import 'package:campus/src/Widget/Password.dart';
+import 'package:campus/src/controles/database/firestore/aluno_dao_firebase.dart';
+import 'package:campus/src/controles/database/firestore/turma_dao_firestore.dart';
 import 'package:campus/src/controles/dto/aluno.dart';
 import 'package:campus/src/controles/dto/turma.dart';
 import 'package:campus/src/controles/interface/aluno_dao_interface.dart';
-import 'package:campus/src/controles/sqlite/dao/aluno_dao_sqlite.dart';
-import 'package:campus/src/controles/sqlite/dao/turma_dao_sqlite.dart';
+import 'package:campus/src/controles/interface/firebase/aluno_interface_Firebase.dart';
+
 import 'package:flutter/material.dart';
 
 class AlunoForm extends StatefulWidget {
@@ -25,7 +27,7 @@ class _AlunoForm extends State<AlunoForm> {
 
   @override
   Widget build(BuildContext context) {
-    Future<List<Turma>> turma = TurmaDAOSQLite().consultarTodos();
+    Future<List<Turma>> turma = TurmaDAOFirestore().consultarTodos();
     receberAlunoAlteracao(context);
     return Scaffold(
       appBar: AppBar(title: const Text("Cadastro Aluno")),
@@ -75,7 +77,7 @@ class _AlunoForm extends State<AlunoForm> {
         var formState = formKey.currentState;
         if (formState != null && formState.validate()) {
           var aluno = preencherDTO();
-          AlunoDao dao = AlunoDAOSQLite();
+          AlunoFireDao dao = AlunoDAOFirebase();
           dao.salvar(aluno);
           Navigator.pop(context);
         }
@@ -115,7 +117,6 @@ class _AlunoForm extends State<AlunoForm> {
       email: campoCPF.controle.text,
       telefone: campoEmail.controle.text,
       password: campoSenha.controle.text,
-      turma: turmaSelecionado,
     );
   }
 

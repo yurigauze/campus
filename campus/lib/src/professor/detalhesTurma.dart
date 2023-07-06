@@ -24,7 +24,7 @@ class DetalhesTurmaScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 16),
                 Text(
-                  turma.turno.nome,
+                  turma.nome,
                   style: TextStyle(fontSize: 16),
                 ),
                 SizedBox(height: 10),

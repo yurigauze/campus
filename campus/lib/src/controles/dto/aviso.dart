@@ -8,11 +8,12 @@ class Aviso {
   final String corpo;
   final String? informacao;
 
-  Aviso(
-      {this.id,
-      required this.titulo,
-      required this.corpo,
-      this.informacao,});
+  Aviso({
+    this.id,
+    required this.titulo,
+    required this.corpo,
+    this.informacao,
+  });
 
   @override
   String toString() {

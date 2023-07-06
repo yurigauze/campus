@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +8,9 @@ void main(List<String> args) async {
   runApp(App());
 
   await Firebase.initializeApp();
+
+  var collection = FirebaseFirestore.instance.collection('turno');
+  print(collection);
 }
 
 

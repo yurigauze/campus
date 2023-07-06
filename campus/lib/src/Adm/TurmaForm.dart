@@ -1,10 +1,12 @@
 import 'package:campus/src/Widget/Botao.dart';
 import 'package:campus/src/Widget/Campo_nome.dart';
+import 'package:campus/src/controles/database/firestore/turma_dao_firestore.dart';
+import 'package:campus/src/controles/database/firestore/turno_dao_firestore.dart';
 import 'package:campus/src/controles/dto/turma.dart';
 import 'package:campus/src/controles/dto/turno.dart';
+import 'package:campus/src/controles/interface/firebase/turma_interface_firebase.dart';
 import 'package:campus/src/controles/interface/turma_dao_interface.dart';
-import 'package:campus/src/controles/sqlite/dao/turma_dao_sqlite.dart';
-import 'package:campus/src/controles/sqlite/dao/turno_dao_sqlite.dart';
+
 import 'package:flutter/material.dart';
 
 class DetalhesTurmaScreen extends StatefulWidget {
@@ -21,7 +23,7 @@ class _DetalhesTurmaScreenState extends State<DetalhesTurmaScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Future<List<Turno>> turnos = TurnoDAOSQLite().consultarTodos();
+    Future<List<Turno>> turnos = TurnoDAOFirebase().consultarTodos();
     receberTurmaAlteracao(context);
     return Scaffold(
       appBar: AppBar(title: const Text("Cadastro Turma")),
@@ -40,7 +42,6 @@ class _DetalhesTurmaScreenState extends State<DetalhesTurmaScreen> {
                   child: Column(
                     children: [
                       campoNome,
-                      campoOpcoes = criarCampoOpcoes(listaTurnos),
                       botaoSalvar(context),
                     ],
                   ));
@@ -50,7 +51,6 @@ class _DetalhesTurmaScreenState extends State<DetalhesTurmaScreen> {
   }
 
   final campoNome = CampoNome(controle: TextEditingController());
-  late DropdownButton<Turno> campoOpcoes;
   late List<Turno> listaTurnos;
   late Turno turnoSelecionado;
 
@@ -61,7 +61,7 @@ class _DetalhesTurmaScreenState extends State<DetalhesTurmaScreen> {
         var formState = formKey.currentState;
         if (formState != null && formState.validate()) {
           var contato = preencherDTO();
-          TurmaDao dao = TurmaDAOSQLite();
+          TurmaFireDao dao = TurmaDAOFirestore();
           dao.salvar(contato);
           Navigator.pop(context);
         }
@@ -78,26 +78,11 @@ class _DetalhesTurmaScreenState extends State<DetalhesTurmaScreen> {
     }
   }
 
-  DropdownButton<Turno> criarCampoOpcoes(List<Turno> turno) {
-    return DropdownButton<Turno>(
-        hint: const Text('Turno'),
-        isExpanded: true,
-        items: turno
-            .map((turno) =>
-                DropdownMenuItem(value: turno, child: Text(turno.nome)))
-            .toList(),
-        onChanged: (value) {
-          setState(() {
-            if (value != null) turnoSelecionado = value;
-          });
-        });
-  }
-
   Turma preencherDTO() {
     return Turma(
       id: id,
       nome: campoNome.controle.text,
-      turno: turnoSelecionado,
+      alunos: [],
     );
   }
 

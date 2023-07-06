@@ -1,10 +1,9 @@
+import 'package:campus/src/controles/database/firestore/avisos_dao_firestore.dart';
+import 'package:campus/src/controles/database/firestore/turno_dao_firestore.dart';
 import 'package:campus/src/controles/dto/aviso.dart';
 import 'package:campus/src/controles/dto/turno.dart';
-
-import 'package:campus/src/controles/interface/aviso_dao_interface.dart';
-import 'package:campus/src/controles/interface/turno_dao_inerface.dart';
-import 'package:campus/src/controles/sqlite/dao/aviso_dao_sqlite.dart';
-import 'package:campus/src/controles/sqlite/dao/turno_dao_sqlite.dart';
+import 'package:campus/src/controles/interface/firebase/aviso_interface_firebase.dart';
+import 'package:campus/src/controles/interface/firebase/turno_interface_firebase.dart';
 
 import 'package:flutter/material.dart';
 
@@ -38,7 +37,7 @@ class DispararTurnoProf extends StatefulWidget {
 class _DispararTurmaProfessorState extends State<DispararTurnoProf> {
   final formkey = GlobalKey<FormState>();
   dynamic id;
-  AvisoDao dao = AvisoDAOSQLite();
+  AvisoFireDao dao = AvisosDAOFirestore();
 
   TextEditingController _Titulo = TextEditingController();
   TextEditingController _Texto = TextEditingController();
@@ -54,7 +53,7 @@ class _DispararTurmaProfessorState extends State<DispararTurnoProf> {
   }
 
   Future<void> buscarTurnos() async {
-    TurnoDao turnoDAO = TurnoDAOSQLite();
+    TurnoFireDao turnoDAO = TurnoDAOFirebase();
     List<Turno> listaTurnos = await turnoDAO.consultarTodos();
     setState(() {
       turnos = listaTurnos;
@@ -143,10 +142,9 @@ class _DispararTurmaProfessorState extends State<DispararTurnoProf> {
                   ),
                 );
               } else {
-                int? idTurma = turnoSelecionado?.id;
                 var aviso = preencherDTO();
-                AvisoDao dao = AvisoDAOSQLite();
-                dao.salvarAvisoTurno(aviso, idTurma ?? 0);
+                AvisoFireDao dao = AvisosDAOFirestore();
+                dao.salvar(aviso);
 
                 showDialog(
                   context: context,
@@ -184,6 +182,7 @@ class _DispararTurmaProfessorState extends State<DispararTurnoProf> {
       id: id,
       titulo: _Titulo.text,
       corpo: _Texto.text,
+      informacao: _selectedItem,
     );
   }
 }

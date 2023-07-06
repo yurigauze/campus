@@ -4,11 +4,10 @@ import 'package:campus/src/Widget/Campo_Telefone.dart';
 import 'package:campus/src/Widget/Campo_email.dart';
 import 'package:campus/src/Widget/Campo_nome.dart';
 import 'package:campus/src/Widget/Password.dart';
+import 'package:campus/src/controles/database/firestore/turma_dao_firestore.dart';
 import 'package:campus/src/controles/dto/professor.dart';
 import 'package:campus/src/controles/dto/turma.dart';
 import 'package:campus/src/controles/interface/professor_dao_interface.dart';
-import 'package:campus/src/controles/sqlite/dao/professor_dao_sqlite.dart';
-import 'package:campus/src/controles/sqlite/dao/turma_dao_sqlite.dart';
 import 'package:flutter/material.dart';
 
 class ProfessorForm extends StatefulWidget {
@@ -25,7 +24,7 @@ class _ProfessorForm extends State<ProfessorForm> {
 
   @override
   Widget build(BuildContext context) {
-    Future<List<Turma>> turma = TurmaDAOSQLite().consultarTodos();
+    Future<List<Turma>> turma = TurmaDAOFirestore().consultarTodos();
     receberProfessorAlteracao(context);
     return Scaffold(
       appBar: AppBar(title: const Text("Cadastro Professor")),
@@ -75,7 +74,7 @@ class _ProfessorForm extends State<ProfessorForm> {
         var formState = formKey.currentState;
         if (formState != null && formState.validate()) {
           var professor = preencherDTO();
-          ProfessorDao dao = ProfessorDAOSQLite();
+          ProfessorDao dao = ProfessorDAOFire();
           dao.salvar(professor);
           Navigator.pop(context);
         }

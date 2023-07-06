@@ -1,11 +1,13 @@
+import 'package:campus/src/controles/database/firestore/turno_dao_firestore.dart';
 import 'package:campus/src/controles/dto/turno.dart';
+import 'package:campus/src/controles/interface/firebase/turno_interface_firebase.dart';
 import 'package:campus/src/controles/interface/turno_dao_inerface.dart';
-import 'package:campus/src/controles/sqlite/dao/turno_dao_sqlite.dart';
+
 import 'package:flutter/material.dart';
 
 class TurnoLista extends StatelessWidget {
   TurnoLista({Key? key}) : super(key: key);
-  TurnoDao dao = TurnoDAOSQLite();
+  TurnoFireDao dao = TurnoDAOFirebase();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class TurnoLista extends StatelessWidget {
       future: dao.consultarTodos(),
       builder: (context, AsyncSnapshot<List<Turno>> lista) {
         if (!lista.hasData) return const CircularProgressIndicator();
-        if (lista.data == null) return const Text('Não há avisos...');
+        if (lista.data == null) return const Text('Não há Turnos...');
         List<Turno> listaTurno = lista.data!;
         return ListView.builder(
           itemCount: listaTurno.length,

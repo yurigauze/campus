@@ -1,18 +1,19 @@
+import 'package:campus/src/controles/dto/aluno.dart';
 import 'package:campus/src/controles/dto/turno.dart';
 
 class Turma {
   final dynamic id;
   final String nome;
-  final Turno turno;
+  List<Aluno>? alunos;
 
-  Turma({this.id, required this.nome, required this.turno});
+  Turma({this.id, required this.nome, this.alunos});
 
   @override
   String toString() {
     return '''
       $id
       $nome 
-      $turno
+      $alunos
     ''';
   }
 }

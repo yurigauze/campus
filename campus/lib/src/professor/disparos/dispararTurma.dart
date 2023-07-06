@@ -1,9 +1,11 @@
+import 'package:campus/src/controles/database/firestore/avisos_dao_firestore.dart';
+import 'package:campus/src/controles/database/firestore/turma_dao_firestore.dart';
 import 'package:campus/src/controles/dto/aviso.dart';
 import 'package:campus/src/controles/dto/turma.dart';
-import 'package:campus/src/controles/interface/aviso_dao_interface.dart';
+import 'package:campus/src/controles/interface/firebase/aviso_interface_firebase.dart';
+import 'package:campus/src/controles/interface/firebase/turma_interface_firebase.dart';
 import 'package:campus/src/controles/interface/turma_dao_interface.dart';
-import 'package:campus/src/controles/sqlite/dao/aviso_dao_sqlite.dart';
-import 'package:campus/src/controles/sqlite/dao/turma_dao_sqlite.dart';
+
 import 'package:flutter/material.dart';
 
 class DispararTurmaProfessor extends StatelessWidget {
@@ -35,15 +37,10 @@ class _DispararTurmaProfessorState extends State<DispararTurmaProf> {
   TextEditingController _Titulo = TextEditingController();
   TextEditingController _Texto = TextEditingController();
   String? _selectedItem;
-  Turma? turmaSelecionado;// Objeto Turma nullable
+  Turma? turmaSelecionado; // Objeto Turma nullable
   dynamic id;
 
-
-
-
-
-
-  AvisoDao dao = AvisoDAOSQLite();
+  AvisoFireDao dao = AvisosDAOFirestore();
 
   List<Turma> turma = [];
 
@@ -55,7 +52,7 @@ class _DispararTurmaProfessorState extends State<DispararTurmaProf> {
   }
 
   Future<void> buscarTurmas() async {
-    TurmaDao turmaDao = TurmaDAOSQLite();
+    TurmaFireDao turmaDao = TurmaDAOFirestore();
     List<Turma> listaTurmas = await turmaDao.consultarTodos();
     setState(() {
       turma = listaTurmas;
@@ -144,12 +141,9 @@ class _DispararTurmaProfessorState extends State<DispararTurmaProf> {
                   ),
                 );
               } else {
-                int? idTurma = turmaSelecionado?.id;
-
-
                 var aviso = preencherDTO();
-                AvisoDao dao = AvisoDAOSQLite();
-                dao.salvarAvisoTurma(aviso, idTurma ?? 0);
+                AvisoFireDao dao = AvisosDAOFirestore();
+                dao.salvar(aviso);
 
                 showDialog(
                   context: context,
@@ -187,7 +181,6 @@ class _DispararTurmaProfessorState extends State<DispararTurmaProf> {
       id: id,
       titulo: _Titulo.text,
       corpo: _Texto.text,
-      
     );
   }
 }

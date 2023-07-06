@@ -1,8 +1,10 @@
 import 'package:campus/src/Widget/BotaoAdc.dart';
 import 'package:campus/src/Widget/PainelBotoes.dart';
+import 'package:campus/src/controles/database/firestore/turno_dao_firestore.dart';
 import 'package:campus/src/controles/dto/turno.dart';
+import 'package:campus/src/controles/interface/firebase/turno_interface_firebase.dart';
 import 'package:campus/src/controles/interface/turno_dao_inerface.dart';
-import 'package:campus/src/controles/sqlite/dao/turno_dao_sqlite.dart';
+
 import 'package:flutter/material.dart';
 
 class TurnoLista extends StatefulWidget {
@@ -13,7 +15,7 @@ class TurnoLista extends StatefulWidget {
 }
 
 class _TurnoListaState extends State<TurnoLista> {
-  TurnoDao dao = TurnoDAOSQLite();
+  TurnoFireDao dao = TurnoDAOFirebase();
 
   @override
   Widget build(BuildContext context) {

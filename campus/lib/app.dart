@@ -1,8 +1,7 @@
 import 'package:campus/src/Adm/AlunoForm.dart';
 import 'package:campus/src/Adm/AlunoLista.dart';
-import 'package:campus/src/Adm/ProfessorForm.dart';
-import 'package:campus/src/Adm/ProfessorLista.dart';
 import 'package:campus/src/Adm/TurmaForm.dart';
+import 'package:campus/src/Adm/TurmaLista%20copy.dart';
 import 'package:campus/src/Adm/homeAdministra%C3%A7%C3%A3o.dart';
 import 'package:campus/src/Adm/TurmaLista.dart';
 import 'package:campus/src/Avisos.dart';
@@ -61,10 +60,9 @@ class App extends StatelessWidget {
         'contatos': (context) => Contatos(),
         'administrador': (context) => HomeAdministracao(),
         'turmaForm': (context) => DetalhesTurmaScreen(),
-        'turmas': (context) => TurmasLista(),
+        'turmass': (context) => TurmasLista(),
         'alunoLista': (context) => AlunoLista(),
         'alunoForm': (context) => AlunoForm(),
-        'professorForm': (context) => ProfessorForm(),
       },
     );
   }

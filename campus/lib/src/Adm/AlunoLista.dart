@@ -1,9 +1,11 @@
 import 'package:campus/src/Widget/BotaoAdc.dart';
 import 'package:campus/src/Widget/PainelBotoes.dart';
+import 'package:campus/src/controles/database/firestore/aluno_dao_firebase.dart';
 import 'package:campus/src/controles/dto/aluno.dart';
 import 'package:campus/src/controles/dto/turma.dart';
 import 'package:campus/src/controles/interface/aluno_dao_interface.dart';
-import 'package:campus/src/controles/sqlite/dao/aluno_dao_sqlite.dart';
+import 'package:campus/src/controles/interface/firebase/aluno_interface_Firebase.dart';
+
 import 'package:flutter/material.dart';
 
 class AlunoLista extends StatefulWidget {
@@ -14,7 +16,7 @@ class AlunoLista extends StatefulWidget {
 }
 
 class _AlunoListaState extends State<AlunoLista> {
-  AlunoDao dao = AlunoDAOSQLite();
+  AlunoFireDao dao = AlunoDAOFirebase();
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +91,6 @@ class ItemLista extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(aluno.nome),
-      subtitle: Text(aluno.turma.nome),
       trailing: PainelBotoes(alterar: alterar, excluir: excluir),
       onTap: alterar,
     );
